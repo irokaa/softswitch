@@ -1,0 +1,290 @@
+/* ... باقي قواعد CSS ... */
+
+        .section-header.category-anchor {
+            /* إضافة مسافة علوية عند الانتقال لتجنب تغطيتها بالهيدر الثابت */
+            scroll-margin-top: 100px; 
+            text-align: right; /* محاذاة العناوين الفرعية لليمين */
+            margin-top: 40px; /* إضافة فاصل بين الأقسام */
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-header-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        /* تعديل شكل الـ Filters ليتناسب مع الروابط بدلاً من الأزرار */
+        .filters .filter-btn {
+            /* تعديل الـ filter-btn ليناسب شكل الـ <a> */
+            display: inline-block;
+            text-align: center;
+            line-height: normal;
+        }
+    </style>
+</head>
+<body dir="ltr">
+<section class="store-section" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-i18n="products.title">Our Products</h2>
+                <p data-i18n="products.subtitle">Explore our selection of high-quality smart home devices and automation solutions</p>
+            </div>
+            
+                        <div class="filters">
+                <a href="#all-products" class="filter-btn active" data-i18n="filters.all">All Products</a>
+                <a href="#lighting" class="filter-btn" data-i18n="filters.lighting">Lighting</a>
+                <a href="#security" class="filter-btn" data-i18n="filters.security">Security</a>
+                <a href="#automation" class="filter-btn" data-i18n="filters.automation">Automation</a>
+                <a href="#sensors" class="filter-btn" data-i18n="filters.sensors">Sensors</a>
+            </div>
+            
+            <div id="all-products" class="section-header category-anchor" dir="rtl">
+                <h3 class="category-header-title" data-i18n="category.all">جميع المنتجات</h3>
+            </div>
+            <div class="store-container">
+                
+                                <div class="product" data-category="lighting">
+                    <span class="product-badge" data-i18n="badges.bestseller">Bestseller</span>
+                    <img src="https://images.unsplash.com/photo-1629835749454-e0b68e914d3f?q=80&w=1500&auto=format&fit=crop" alt="Life Smart Switch" class="product-image">
+                    <div class="product-info">
+                        <span class="product-category" data-i18n="categories.lighting">Smart Lighting</span>
+                        <h3 class="product-title" data-i18n="products.1.title">Life Smart Wi-Fi Switch</h3>
+                        <p class="product-description" data-i18n="products.1.description">Control your lights from your smartphone easily and from anywhere in the world via Wi-Fi.</p>
+                        
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(128)</span>
+                        </div>
+                        
+                        <div class="product-footer">
+                            <div class="product-price">4,500 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                                <div class="product" data-category="security">
+                    <span class="product-badge" data-i18n="badges.popular">Popular</span>
+                    <img src="https://images.unsplash.com/photo-1558089687-b785ad8fe894?q=80&w=1500&auto=format&fit=crop" alt="Softswitch Security Camera" class="product-image">
+                    <div class="product-info">
+                        <span class="product-category" data-i18n="categories.security">Security</span>
+                        <h3 class="product-title" data-i18n="products.2.title">Softswitch 1080p Security Camera</h3>
+                        <p class="product-description" data-i18n="products.2.description">Continuous security and instant high-definition monitoring via app with night vision feature.</p>
+                        
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(94)</span>
+                        </div>
+                        
+                        <div class="product-footer">
+                            <div class="product-price">9,500 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                                <div class="product" data-category="sensors">
+                    <img src="https://images.unsplash.com/photo-1594944980208-8e622ed0cc27?q=80&w=1500&auto=format&fit=crop" alt="Smart Motion Sensor" class="product-image">
+                    <div class="product-info">
+                        <span class="product-category" data-i18n="categories.sensors">Sensors</span>
+                        <h3 class="product-title" data-i18n="products.3.title">Smart Motion Sensor</h3>
+                        <p class="product-description" data-i18n="products.3.description">Responds to motion and light, automatically illuminates spaces and saves energy consumption.</p>
+                        
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(76)</span>
+                        </div>
+                        
+                        <div class="product-footer">
+                            <div class="product-price">3,800 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                                <div class="product" data-category="automation">
+                    <span class="product-badge" data-i18n="badges.new">New</span>
+                    <img src="https://images.unsplash.com/photo-1517404495768-e4b52b271d44?q=80&w=1500&auto=format&fit=crop" alt="Smart Thermostat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-category" data-i18n="categories.automation">Automation</span>
+                        <h3 class="product-title" data-i18n="products.4.title">Smart Room Thermostat</h3>
+                        <p class="product-description" data-i18n="products.4.description">Precise control of home temperature with smart programming for perfect comfort and bill savings.</p>
+                        
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(42)</span>
+                        </div>
+                        
+                        <div class="product-footer">
+                            <div class="product-price">12,900 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div id="lighting" class="section-header category-anchor" dir="rtl">
+                <h3 class="category-header-title" data-i18n="category.lighting">منتجات الإضاءة الذكية</h3>
+            </div>
+            <div class="store-container">
+                <div class="product" data-category="lighting">
+                    <span class="product-badge" data-i18n="badges.bestseller">Bestseller</span>
+                    <img src="https://images.unsplash.com/photo-1629835749454-e0b68e914d3f?q=80&w=1500&auto=format&fit=crop" alt="Life Smart Switch" class="product-image">
+                    <div class="product-info">
+                        <span class="product-category" data-i18n="categories.lighting">Smart Lighting</span>
+                        <h3 class="product-title" data-i18n="products.1.title">Life Smart Wi-Fi Switch</h3>
+                        <p class="product-description" data-i18n="products.1.description">Control your lights from your smartphone easily and from anywhere in the world via Wi-Fi.</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(128)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">4,500 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <div id="security" class="section-header category-anchor" dir="rtl">
+                <h3 class="category-header-title" data-i18n="category.security">أنظمة الأمن والمراقبة</h3>
+            </div>
+            <div class="store-container">
+                <div class="product" data-category="security">
+                    <span class="product-badge" data-i18n="badges.popular">Popular</span>
+                    <img src="https://images.unsplash.com/photo-1558089687-b785ad8fe894?q=80&w=1500&auto=format&fit=crop" alt="Softswitch Security Camera" class="product-image">
+                    <div class="product-info">
+                        <span class="product-category" data-i18n="categories.security">Security</span>
+                        <h3 class="product-title" data-i18n="products.2.title">Softswitch 1080p Security Camera</h3>
+                        <p class="product-description" data-i18n="products.2.description">Continuous security and instant high-definition monitoring via app with night vision feature.</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(94)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">9,500 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <div id="automation" class="section-header category-anchor" dir="rtl">
+                <h3 class="category-header-title" data-i18n="category.automation">حلول الأتمتة والتحكم</h3>
+            </div>
+            <div class="store-container">
+                <div class="product" data-category="automation">
+                    <span class="product-badge" data-i18n="badges.new">New</span>
+                    <img src="https://images.unsplash.com/photo-1517404495768-e4b52b271d44?q=80&w=1500&auto=format&fit=crop" alt="Smart Thermostat" class="product-image">
+                    <div class="product-info">
+                        <span class="product-category" data-i18n="categories.automation">Automation</span>
+                        <h3 class="product-title" data-i18n="products.4.title">Smart Room Thermostat</h3>
+                        <p class="product-description" data-i18n="products.4.description">Precise control of home temperature with smart programming for perfect comfort and bill savings.</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(42)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">12,900 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <div id="sensors" class="section-header category-anchor" dir="rtl">
+                <h3 class="category-header-title" data-i18n="category.sensors">الحساسات الذكية</h3>
+            </div>
+            <div class="store-container">
+                <div class="product" data-category="sensors">
+                    <img src="https://images.unsplash.com/photo-1594944980208-8e622ed0cc27?q=80&w=1500&auto=format&fit=crop" alt="Smart Motion Sensor" class="product-image">
+                    <div class="product-info">
+                        <span class="product-category" data-i18n="categories.sensors">Sensors</span>
+                        <h3 class="product-title" data-i18n="products.3.title">Smart Motion Sensor</h3>
+                        <p class="product-description" data-i18n="products.3.description">Responds to motion and light, automatically illuminates spaces and saves energy consumption.</p>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(76)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">3,800 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                    </div>
+    </section>

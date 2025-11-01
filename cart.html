@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Softswitch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-blue: #2563eb;
+            --blue-dark: #1d4ed8;
+            --blue-light: #dbeafe;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db; /* أضفت لتجربة السلة الفارغة */
+            --gray-600: #4b5563; /* أضفت لتجربة السلة الفارغة */
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --white: #ffffff;
+            --accent-green: #10b981;
+            --danger-red: #ef4444;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Almarai', sans-serif;
+            line-height: 1.6;
+            color: var(--gray-700);
+            background-color: var(--gray-50);
+            transition: var(--transition);
+        }
+
+        body[dir="rtl"] {
+            font-family: 'Almarai', sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 20px;
+            position: relative;
+        }
+
+        .language-btn {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .language-btn:hover {
+            background: var(--gray-200);
+        }
+
+        .language-btn.active {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        /* Header Styles */
+      
+        /* ********** 1. شريط التنقل العلوي (LifeSmart) ********** */
+        .new-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: var(--white);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            direction: ltr;
+        }
+
+         .company-logo {
+            height: 30px; 
+            width: auto;
+            margin-right: 10px; 
+        }
+
+         .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-text-new);
+            display: flex; 
+            align-items: center;
+ }
+
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--gray-700);
+            transition: var(--transition);
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-blue);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: var(--primary-blue);
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-green);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-700);
+            cursor: pointer;
+        }
+
+        /* Cart Layout */
+        .cart-section {
+            padding: 60px 0 80px;
+        }
+
+        .cart-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .cart-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+        }
+
+        .cart-header p {
+            font-size: 18px;
+            color: var(--gray-700);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cart-layout {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Cart Items Column */
+        .cart-items {
+            flex-grow: 1;
+            flex-basis: 60%;
+            min-width: 300px;
+        }
+
+        .cart-items h2 {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        /* Cart Item Design */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .cart-item:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-left: 20px;
+            flex-shrink: 0;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-details h4 {
+            margin: 0 0 8px 0;
+            color: var(--gray-900);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .item-details p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--gray-700);
+        }
+        
+        /* Product Quantity */
+        .item-qty {
+            display: flex;
+            align-items: center;
+            margin: 0 20px;
+            font-weight: 700;
+            gap: 12px;
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            /* أضفنا خطوط للزر ليتناسب مع الأيقونة */
+            font-size: 18px; 
+            line-height: 1;
+        }
+
+        .qty-btn:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
+        .quantity {
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .item-price {
+            font-weight: 700;
+            color: var(--accent-green);
+            font-size: 18px;
+            margin-left: 20px;
+            min-width: 100px;
+            text-align: right;
+        }
+
+        .remove-btn {
+            background: var(--danger-red);
+            border: none;
+            color: white;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        .remove-btn:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
+        /* Summary Column */
+        .cart-summary {
+            flex-basis: 30%;
+            min-width: 280px;
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .cart-summary h2 {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        /* Summary Table */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        .summary-table td {
+            padding: 12px 0;
+            font-size: 16px;
+        }
+
+        .summary-table .total-row td {
+            border-top: 2px solid var(--gray-200);
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary-blue);
+            padding-top: 15px;
+        }
+
+        /* Checkout Button */
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: var(--accent-green);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            font-size: 18px;
+            transition: var(--transition);
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .checkout-btn:hover {
+            background-color: #0da271;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Continue Shopping Button */
+        .continue-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            margin-top: 20px;
+            font-weight: 700;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .continue-btn:hover {
+            background-color: var(--blue-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Empty Cart State */
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .empty-cart-icon {
+            font-size: 80px;
+            color: var(--gray-300);
+            margin-bottom: 20px;
+        }
+
+        .empty-cart h3 {
+            font-size: 24px;
+            color: var(--gray-700);
+            margin-bottom: 16px;
+        }
+
+        .empty-cart p {
+            color: var(--gray-600);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--gray-900);
+            color: var(--gray-200);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+
+        .footer-heading {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-blue);
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+            padding-left: 5px;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .footer-contact i {
+            color: var(--primary-blue);
+            margin-top: 4px;
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copyright {
+            font-size: 14px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* RTL Specific Styles */
+        body[dir="rtl"] .nav-link::after,
+        body[dir="rtl"] .footer-heading::after {
+            left: auto;
+            right: 0;
+        }
+        
+        body[dir="rtl"] .footer-links a:hover {
+            padding-left: 0;
+            padding-right: 5px;
+        }
+        
+        body[dir="rtl"] .item-image {
+            margin-left: 0;
+            margin-right: 20px;
+        }
+        
+        body[dir="rtl"] .item-price {
+            margin-left: 0;
+            margin-right: 20px;
+            text-align: left;
+        }
+        
+        body[dir="rtl"] .remove-btn {
+            margin-left: 0;
+            margin-right: 15px;
+        }
+        
+        /* ضبط اتجاه العناصر داخل عربة التسوق في RTL */
+        body[dir="rtl"] .cart-item {
+            flex-direction: row-reverse;
+        }
+        
+        body[dir="rtl"] .item-qty {
+            /* تعديل الترتيب ليناسب RTL */
+            flex-direction: row-reverse; 
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .cart-layout {
+                flex-direction: column;
+            }
+            
+            .cart-items, .cart-summary {
+                flex-basis: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .cart-header h1 {
+                font-size: 32px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .language-switcher {
+                margin-left: 0;
+                margin-top: 10px;
+                justify-content: center;
+            }
+            
+            .cart-item {
+                flex-wrap: wrap;
+                justify-content: space-between;
+                text-align: center;
+                /* إزالة الاتجاه المعكوس ليتناسب مع التفاف العناصر */
+                flex-direction: row; 
+            }
+            
+            .item-image {
+                margin: 0 auto 15px;
+                width: 120px;
+                height: 120px;
+                /* إلغاء الهامش الخاص بـ RTL عند التجميع في المنتصف */
+                margin-left: auto; 
+                margin-right: auto;
+            }
+            
+            .item-details {
+                width: 100%;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+            
+            .item-qty {
+                margin: 0 auto 15px;
+                /* إعادة الترتيب في العرض الصغير */
+                flex-direction: row; 
+            }
+            
+            .item-price {
+                /* جعل السعر يأخذ نصف السطر مع زر الحذف */
+                margin-left: 10px; 
+                margin-right: 10px; 
+                text-align: center;
+            }
+            
+            .remove-btn {
+                margin: 0 10px;
+            }
+            
+            /* تجميع السعر وزر الحذف في سطر واحد أسفل الكمية */
+            .item-price, .remove-btn {
+                margin: 0 10px;
+                flex-basis: 40%; 
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .item-price {
+                order: 1; /* ترتيب */
+            }
+            
+            .remove-btn {
+                order: 2; /* ترتيب */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .cart-section {
+                padding: 40px 0 60px;
+            }
+            
+            .cart-header h1 {
+                font-size: 28px;
+            }
+            
+            .cart-item {
+                padding: 15px;
+            }
+            
+            .cart-summary {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body dir="ltr">
+     <header class="new-header">
+        <div class="logo">
+            <img src="WhatsApp Image 2025-10-20 à 16.56.42_e187fcc5.jpg" alt="Softswitch Logo" class="company-logo">
+            SOFTSWITCH
+        </div>
+                
+                <nav class="nav-menu">
+                    <a href="test.html" class="nav-link" data-i18n="nav.home">Home</a>
+                    <a href="products.html" class="nav-link" data-i18n="nav.products">Products</a>
+                    <a href="about us.html" class="nav-link" data-i18n="nav.about">About Us</a>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
+                    <a href="cart.html" class="nav-link cart-icon active">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">2</span> </a>
+                    
+                    <div class="language-switcher">
+                        <button class="language-btn active" data-lang="en">
+                            <i class="fas fa-globe"></i>
+                            English
+                        </button>
+                        <button class="language-btn" data-lang="ar">
+                            <i class="fas fa-globe"></i>
+                            العربية
+                        </button>
+                    </div>
+                </nav>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="cart-section">
+        <div class="container">
+            <div class="cart-header">
+                <h1 data-i18n="cart.title">Your Shopping Cart</h1>
+                <p data-i18n="cart.subtitle">Review your items and proceed to checkout</p>
+            </div>
+            
+            <div class="empty-cart" style="display: none;">
+                <div class="empty-cart-icon"><i class="fas fa-shopping-basket"></i></div>
+                <h3 data-i18n="cart.emptyTitle">Your Cart is Empty</h3>
+                <p data-i18n="cart.emptyText">It looks like you haven't added any products to your cart yet.</p>
+                <a href="products.html" class="continue-btn" style="display: inline-flex;">
+                    <i class="fas fa-arrow-left"></i>
+                    <span data-i18n="cart.startShopping">Start Shopping</span>
+                </a>
+            </div>
+
+            <div class="cart-layout">
+                <div class="cart-items">
+                    <h2 data-i18n="cart.itemsTitle">Your Items (2 products)</h2>
+
+                    <div class="cart-item" data-unit-price="4500" data-item-id="item-1">
+                        <div class="item-image">
+                            <img src="image_1a78b8.jpg" alt="Life Smart Switch">
+                        </div>
+                        <div class="item-details">
+                            <h4 data-i18n="cart.items.1.title">Life Smart Wi-Fi Switch</h4>
+                            <p data-i18n="cart.items.1.unitPrice">Unit Price: 4,500 DA</p>
+                        </div>
+                        <div class="item-qty">
+                            <button class="qty-btn minus">-</button>
+                            <span class="quantity">1</span> <button class="qty-btn plus">+</button>
+                        </div>
+                        <div class="item-price">
+                            4,500 DA </div>
+                        <button class="remove-btn" title="Remove product">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+
+                    <div class="cart-item" data-unit-price="9500" data-item-id="item-2">
+                        <div class="item-image">
+                            <img src="image_4d30d6.jpg" alt="Softswitch Security Camera">
+                        </div>
+                        <div class="item-details">
+                            <h4 data-i18n="cart.items.2.title">Softswitch 1080p Security Camera</h4>
+                            <p data-i18n="cart.items.2.unitPrice">Unit Price: 9,500 DA</p>
+                        </div>
+                        <div class="item-qty">
+                            <button class="qty-btn minus">-</button>
+                            <span class="quantity">1</span> <button class="qty-btn plus">+</button>
+                        </div>
+                        <div class="item-price">
+                            9,500 DA </div>
+                        <button class="remove-btn" title="Remove product">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    
+                    <a href="products.html" class="continue-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        <span data-i18n="cart.continueShopping">Continue Shopping</span>
+                    </a>
+                </div>
+
+                <div class="cart-summary">
+                    <h2 data-i18n="cart.summaryTitle">Order Summary</h2>
+                    
+                    <table class="summary-table">
+                        <tr>
+                            <td data-i18n="cart.summary.subtotal">Subtotal (<span id="summary-item-count">2</span> products):</td>
+                            <td style="text-align: right;" id="subtotal-price">14,000 DA</td> </tr>
+                        <tr>
+                            <td data-i18n="cart.summary.shipping">Shipping (Inside Algiers):</td>
+                            <td style="text-align: right;" id="shipping-price">600 DA</td> </tr>
+                        <tr class="total-row">
+                            <td data-i18n="cart.summary.total">Total:</td>
+                            <td style="text-align: right;" id="total-price">14,600 DA</td> </tr>
+                    </table>
+
+                    <a href="#" class="checkout-btn" data-i18n="cart.checkout">Proceed to Checkout</a>
+                    
+                    <div style="text-align: center; font-size: 14px; color: var(--gray-600);">
+                        <i class="fas fa-lock" style="margin-right: 5px;"></i>
+                        <span data-i18n="cart.secureCheckout">Secure checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <i class="fas fa-bolt"></i>
+                        SOFTSWITCH
+                    </div>
+                    <p data-i18n="footer.about">Specialists in low-voltage systems, automation, and smart solutions for residential and commercial applications.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-container">
+                    <h3 class="footer-heading" data-i18n="footer.links">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+                        <li><a href="products.html" data-i18n="nav.products">Products</a></li>
+                        <li><a href="solutions.html" data-i18n="nav.solutions">Solutions</a></li>
+                        <li><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
+                        <li><a href="about.html" data-i18n="nav.about">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links-container">
+                    <h3 class="footer-heading" data-i18n="footer.services">Our Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-i18n="services.1">Low-Voltage Systems</a></li>
+                        <li><a href="#" data-i18n="services.2">Automation Solutions</a></li>
+                        <li><a href="#" data-i18n="services.3">Security Systems</a></li>
+                        <li><a href="#" data-i18n="services.4">Network Infrastructure</a></li>
+                        <li><a href="#" data-i18n="services.5">Maintenance & Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3 class="footer-heading" data-i18n="footer.contact">Contact Info</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span data-i18n="contact.address">Hassi Messaoud, Ouargla, Algeria</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+213 656 415 281</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>soft_switch@yahoo.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright" data-i18n="footer.copyright">Copyright © 2025 Softswitch. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
+                    <a href="#" data-i18n="footer.terms">Terms of Use</a>
+                    <a href="#" data-i18n="footer.sitemap">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =========================================================
+        // 1. Translation and Language Switcher (من الكود الأصلي)
+        // =========================================================
+        const translations = {
+            en: {
+                "nav.home": "Home",
+                "nav.products": "Products",
+                "nav.solutions": "Solutions",
+                "nav.projects": "Projects",
+                "nav.about": "About Us",
+                "nav.contact": "Contact",
+                "cart.title": "Your Shopping Cart",
+                "cart.subtitle": "Review your items and proceed to checkout",
+                "cart.itemsTitle": "Your Items ({{count}} products)", // تم تعديل هذا ليناسب JS
+                "cart.summaryTitle": "Order Summary",
+                "cart.continueShopping": "Continue Shopping",
+                "cart.checkout": "Proceed to Checkout",
+                "cart.secureCheckout": "Secure checkout",
+                "cart.emptyTitle": "Your Cart is Empty",
+                "cart.emptyText": "It looks like you haven't added any products to your cart yet.",
+                "cart.startShopping": "Start Shopping",
+                "cart.items.1.title": "Life Smart Wi-Fi Switch",
+                "cart.items.1.unitPrice": "Unit Price: 4,500 DA",
+                "cart.items.2.title": "Softswitch 1080p Security Camera",
+                "cart.items.2.unitPrice": "Unit Price: 9,500 DA",
+                "cart.summary.subtotal": "Subtotal ({{count}} products):", // تم تعديل هذا ليناسب JS
+                "cart.summary.shipping": "Shipping (Inside Algiers):",
+                "cart.summary.total": "Total:",
+                "footer.about": "Specialists in low-voltage systems, automation, and smart solutions for residential and commercial applications.",
+                "footer.links": "Quick Links",
+                "footer.services": "Our Services",
+                "footer.contact": "Contact Info",
+                "footer.copyright": "Copyright © 2025 Softswitch. All rights reserved.",
+                "footer.privacy": "Privacy Policy",
+                "footer.terms": "Terms of Use",
+                "footer.sitemap": "Sitemap",
+                "services.1": "Low-Voltage Systems",
+                "services.2": "Automation Solutions",
+                "services.3": "Security Systems",
+                "services.4": "Network Infrastructure",
+                "services.5": "Maintenance & Support",
+                "contact.address": "Hassi Messaoud, Ouargla, Algeria"
+            },
+            ar: {
+                "nav.home": "الرئيسية",
+                "nav.products": "المنتجات",
+                "nav.solutions": "الحلول",
+                "nav.projects": "المشاريع",
+                "nav.about": "من نحن",
+                "nav.contact": "اتصل بنا",
+                "cart.title": "سلة مشترياتك",
+                "cart.subtitle": "راجع عناصرك وتابع للدفع",
+                "cart.itemsTitle": "عناصرك ({{count}} منتجات)", // تم تعديل هذا ليناسب JS
+                "cart.summaryTitle": "ملخص الطلب",
+                "cart.continueShopping": "مواصلة التسوق",
+                "cart.checkout": "المتابعة لإتمام الطلب",
+                "cart.secureCheckout": "دفع آمن",
+                "cart.emptyTitle": "سلتك فارغة",
+                "cart.emptyText": "يبدو أنك لم تضف أي منتجات إلى سلتك بعد.",
+                "cart.startShopping": "ابدأ التسوق",
+                "cart.items.1.title": "مفتاح لايف سمارت الذكي",
+                "cart.items.1.unitPrice": "السعر للوحدة: 4,500 دج",
+                "cart.items.2.title": "كاميرا سوفت سويش 1080p للأمان",
+                "cart.items.2.unitPrice": "السعر للوحدة: 9,500 دج",
+                "cart.summary.subtotal": "الإجمالي الفرعي ({{count}} منتجات):", // تم تعديل هذا ليناسب JS
+                "cart.summary.shipping": "تكلفة الشحن (داخل العاصمة):",
+                "cart.summary.total": "الإجمالي النهائي:",
+                "footer.about": "متخصصون في أنظمة الجهد المنخفض والأتمتة والحلول الذكية للتطبيقات السكنية والتجارية.",
+                "footer.links": "روابط سريعة",
+                "footer.services": "خدماتنا",
+                "footer.contact": "معلومات الاتصال",
+                "footer.copyright": "حقوق الطبع © 2025 سوفت سويش. جميع الحقوق محفوظة.",
+                "footer.privacy": "سياسة الخصوصية",
+                "footer.terms": "شروط الاستخدام",
+                "footer.sitemap": "خريطة الموقع",
+                "services.1": "أنظمة الجهد المنخفض",
+                "services.2": "حلول الأتمتة",
+                "services.3": "أنظمة الأمان",
+                "services.4": "البنية التحتية للشبكات",
+                "services.5": "الصيانة والدعم",
+                "contact.address": "حاسي مسعود، ورقلة، الجزائر"
+            }
+        };
+
+        let currentLang = document.body.getAttribute('dir') === 'rtl' ? 'ar' : 'en';
+
+        function applyTranslations(lang) {
+            currentLang = lang;
+            document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            
+            // تحديث زر اللغة النشط
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // تطبيق الترجمات
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    let text = translations[lang][key];
+                    // السماح بتحديث العدد في الترجمة
+                    if (key === "cart.itemsTitle" || key === "cart.summary.subtotal") {
+                         const count = document.querySelectorAll('.cart-item').length;
+                         text = text.replace('{{count}}', count);
+                    }
+                    element.textContent = text;
+                }
+            });
+            
+            // بما أن العناوين تعتمد على الترجمة، نعيد تحديث الإجمالي أيضاً
+            updateCartTotal();
+        }
+
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                applyTranslations(btn.dataset.lang);
+            });
+        });
+
+        // =========================================================
+        // 2. Cart Interaction Logic (الجزء المضاف للتحسين)
+        // =========================================================
+        
+        const SHIPPING_COST = 600; // تكلفة الشحن بالدينار الجزائري (DA)
+
+        /**
+         * دالة مساعدة لتحويل الرقم إلى تنسيق نصي (4,500 DA أو 4,500 دج)
+         * @param {number} priceNumber - السعر كرقم.
+         * @returns {string} - السعر بتنسيق نصي.
+         */
+        function formatPrice(priceNumber) {
+            const currencySymbol = currentLang === 'ar' ? ' دج' : ' DA';
+            // استخدام توطين (locale) لإضافة الفواصل
+            return priceNumber.toLocaleString('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }) + currencySymbol;
+        }
+
+        /**
+         * الدالة الرئيسية: لإعادة حساب إجمالي السلة بالكامل
+         */
+        function updateCartTotal() {
+            let subtotal = 0;
+            let totalUniqueItems = 0;
+            const cartItems = document.querySelectorAll('.cart-item');
+
+            // 1. حساب الإجمالي الفرعي (Subtotal)
+            cartItems.forEach(card => {
+                const unitPrice = parseFloat(card.dataset.unitPrice || 0);
+                const quantityElement = card.querySelector('.quantity');
+                const quantity = parseInt(quantityElement.textContent);
+                
+                // حساب سعر المنتج (الكمية * سعر الوحدة)
+                const productTotalPrice = unitPrice * quantity;
+
+                // تحديث السعر الإجمالي للمنتج الواحد في الواجهة
+                card.querySelector('.item-price').textContent = formatPrice(productTotalPrice);
+
+                subtotal += productTotalPrice;
+                totalUniqueItems++;
+            });
+
+            // 2. حساب الإجمالي النهائي (Total)
+            const total = subtotal + SHIPPING_COST;
+            
+            // 3. تحديث ملخص الطلب (Summary)
+            document.getElementById('subtotal-price').textContent = formatPrice(subtotal);
+            document.getElementById('shipping-price').textContent = formatPrice(SHIPPING_COST);
+            document.getElementById('total-price').textContent = formatPrice(total);
+            
+            // 4. تحديث عدد المنتجات في الترجمة ورأس السلة
+            const cartItemsTitle = document.querySelector('.cart-items h2');
+            const subtotalTitleElement = document.querySelector('[data-i18n="cart.summary.subtotal"]');
+            const cartCountHeader = document.querySelector('.cart-count');
+
+            if (cartItemsTitle) {
+                cartItemsTitle.textContent = translations[currentLang]["cart.itemsTitle"].replace('{{count}}', totalUniqueItems);
+            }
+            if (subtotalTitleElement) {
+                subtotalTitleElement.textContent = translations[currentLang]["cart.summary.subtotal"].replace('{{count}}', totalUniqueItems);
+            }
+            if (cartCountHeader) {
+                cartCountHeader.textContent = totalUniqueItems;
+            }
+            
+            // 5. إظهار/إخفاء حالة السلة الفارغة
+            const emptyCartElement = document.querySelector('.empty-cart');
+            const cartLayout = document.querySelector('.cart-layout');
+            
+            if (totalUniqueItems === 0) {
+                 if (emptyCartElement) {
+                    emptyCartElement.style.display = 'block';
+                 }
+                 if (cartLayout) {
+                    cartLayout.style.display = 'none';
+                 }
+            } else {
+                 if (emptyCartElement) {
+                    emptyCartElement.style.display = 'none';
+                 }
+                 if (cartLayout) {
+                    // نستخدم Flex لأن هذا ما تم تعريفه في CSS
+                    cartLayout.style.display = 'flex'; 
+                 }
+            }
+        }
+
+        /**
+         * إعداد مستمعي الأحداث لأزرار الكمية والحذف
+         */
+        function setupCartInteractions() {
+            const cartSection = document.querySelector('.cart-section');
+
+            // استخدام تفويض الحدث (Event Delegation)
+            cartSection.addEventListener('click', function(event) {
+                const target = event.target;
+                const card = target.closest('.cart-item');
+
+                // إذا لم يكن الضغط داخل عنصر المنتج، نخرج
+                if (!card) return; 
+
+                const quantityElement = card.querySelector('.quantity');
+                let quantity = parseInt(quantityElement.textContent);
+
+                // 1. زيادة/نقصان الكمية
+                if (target.classList.contains('plus') || target.closest('.plus')) {
+                    quantity++;
+                    quantityElement.textContent = quantity;
+                    updateCartTotal(); 
+                } 
+                else if (target.classList.contains('minus') || target.closest('.minus')) {
+                    if (quantity > 1) { // لا يمكن أن تقل الكمية عن 1
+                        quantity--;
+                        quantityElement.textContent = quantity;
+                        updateCartTotal();
+                    }
+                } 
+                
+                // 2. حذف المنتج نهائياً
+                else if (target.classList.contains('remove-btn') || target.closest('.remove-btn')) {
+                    // رسالة تأكيد (اختياري)
+                    if (confirm(currentLang === 'ar' ? "هل أنت متأكد من رغبتك في حذف هذا المنتج من السلة؟" : "Are you sure you want to remove this item from the cart?")) {
+                        card.remove(); 
+                        updateCartTotal(); 
+                    }
+                }
+            });
+        }
+
+        // عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // تطبيق الترجمة الافتراضية عند التحميل
+            applyTranslations(currentLang); 
+            
+            // تهيئة تفاعلات السلة (بعد تحميل العناصر)
+            setupCartInteractions();
+            
+            // التأكد من تحديث الإجمالي بناءً على القيم الافتراضية
+            updateCartTotal(); 
+        });
+    </script>
+</body>
+</html>

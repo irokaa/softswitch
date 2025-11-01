@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftSwitch - Smart Home Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --------------------------------- */
+        /* متغيرات CSS الموحدة */
+        /* --------------------------------- */
+        :root {
+            --primary-text-new: #212121;
+            --secondary-text-new: #505050; 
+            --brand-blue: #007bff; 
+            --light-bg-new: #f5f5f5; 
+            --white: #ffffff;
+            --primary-color: #0056b3; 
+            --secondary-color: #f8f8f8; 
+            --background-body: #ffffff; 
+            --text-color: #212529; 
+            --accent-color: #28a745; 
+            --shadow-light: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        /* --------------------------------- */
+        /* أنماط الجسم والهيكل العامة */
+        /* --------------------------------- */
+        body { 
+            font-family: 'Almarai', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-body);
+            color: var(--text-color);
+            line-height: 1.6;
+            direction: ltr; 
+        }
+
+        /* ********** 1. شريط التنقل العلوي ********** */
+        .new-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: var(--white);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            direction: ltr;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-text-new);
+            display: flex; 
+            align-items: center;
+        }
+        .company-logo {
+            height: 30px; 
+            width: auto;
+            margin-right: 10px; 
+        }
+        .main-nav a {
+            text-decoration: none;
+            color: var(--secondary-text-new);
+            margin-left: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .main-nav a:hover {
+            color: var(--brand-blue);
+        }
+        .menu-toggle {
+            display: none; 
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--primary-text-new);
+        }
+        
+        /* ********** 2. قسم البطل (Hero Section) ********** */
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+            direction: ltr;
+        }
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 50px; 
+            padding-bottom: 50px;
+            text-align: center; 
+        }
+        .hero-content h1 {
+            font-size: 60px; 
+            font-weight: 900;
+            margin-bottom: 10px; 
+            text-transform: uppercase;
+            color: var(--primary-text-new);
+            cursor: default; 
+        }
+        .central-control {
+            font-size: 40px; 
+            font-weight: 500;
+            margin-top: 10px;
+            text-align: center; 
+            width: 100%;
+            color: var(--primary-text-new);
+            cursor: default; 
+        }
+
+        /* ********** 3. قسم Switches الجديد ********** */
+        .switches-section {
+            background-color: #f8f8f8;
+            padding: 80px 20px;
+            text-align: center;
+            margin: 40px 0;
+        }
+        .switches-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .switches-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-text-new);
+            margin-bottom: 15px;
+        }
+        .switches-subtitle {
+            font-size: 24px;
+            color: var(--secondary-text-new);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .switches-btn {
+            display: inline-block;
+            background-color: var(--brand-blue);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+        .switches-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        }
+
+        /* ********** 4. زر الاستفسار العائم ********** */
+        .floating-inquiry-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--brand-blue);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        
+        /* --------------------------------- */
+        /* أنماط تذييل الصفحة */
+        /* --------------------------------- */
+        footer {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            font-size: 14px;
+            color: var(--primary-color);
+            margin-top: 50px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+            text-align: center;
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            direction: rtl; 
+        }
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 400;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        .copyright {
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        /* --------------------------------- */
+        /* 💥 أنماط Image Carousel المعدلة لتناسب الأبعاد (Aspect Ratio) 💥 */
+        /* --------------------------------- */
+        .carousel-container {
+            width: 100%;
+            max-width: 1200px; 
+            margin: 20px auto; 
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            
+            /* إزالة الارتفاع الثابت واستخدام نسبة الأبعاد */
+            height: 0; 
+            padding-top: 47.6%; /* نسبة 21:9 تقريباً */
+        }
+
+        .carousel-slide {
+            display: none; 
+            width: 100%;
+            height: 100%;
+            animation: fadeEffect 1.5s; 
+            
+            /* جعل الشريحة تأخذ موضع مطلق لتناسب الـ padding-top */
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        /* تظهر الشريحة النشطة فقط */
+        .carousel-slide.active {
+            display: block; 
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            /* الإبقاء على 'cover' لضمان ملء الصورة للحاوية المتناسبة الأبعاد */
+            object-fit: cover; 
+        }
+
+        /* أزرار التنقل (يمين ويسار) */
+        .carousel-btn {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: auto;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        .carousel-btn.prev {
+            left: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .carousel-btn.next {
+            right: 0;
+            border-radius: 3px 0 0 3px; 
+        }
+        .carousel-btn:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* النقاط (Dots) للتنقل */
+        .carousel-dots {
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            z-index: 10;
+        }
+        .dot {
+            cursor: pointer;
+            height: 10px;
+            width: 10px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+        .dot.active, .dot:hover {
+            background-color: #717171;
+        }
+
+        /* تأثير التلاشي (Fade Effect) للشرائح */
+        @keyframes fadeEffect {
+            from {opacity: 0.7}
+            to {opacity: 1}
+        }
+
+        /* --------------------------------- */
+        /* استجابة العرض (Responsive) */
+        /* --------------------------------- */
+        @media (max-width: 900px) {
+            .main-nav { display: none; }
+            .menu-toggle { display: block; }
+            .new-header { padding: 15px 20px; }
+            .hero-content h1 { font-size: 50px; }
+            .central-control { font-size: 30px; }
+            .switches-title { font-size: 30px; }
+            .switches-subtitle { font-size: 20px; }
+            /* تعديل الارتفاع على الشاشات الصغيرة باستخدام نسبة أقل */
+            .carousel-container { 
+                padding-top: 56.25%; /* نسبة 16:9 على الشاشات الصغيرة */
+                margin-top: 15px; 
+            } 
+        }
+        @media (max-width: 600px) {
+            .hero-content h1 { font-size: 40px; }
+            .central-control { font-size: 25px; text-align: center; }
+            .switches-title { font-size: 26px; }
+            .switches-subtitle { font-size: 18px; }
+            .switches-btn { padding: 12px 30px; font-size: 16px; }
+            .carousel-container { padding-top: 66%; margin-top: 10px; } /* نسبة 3:2 تقريباً للهواتف */
+            .carousel-btn { padding: 10px; font-size: 16px; }
+            .dot { height: 8px; width: 8px; margin: 0 3px; }
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="new-header">
+        <div class="logo">
+            <img src="WhatsApp Image 2025-10-20 à 16.56.42_e187fcc5.jpg" alt="Softswitch Logo" class="company-logo">
+            SOFTSWITCH
+        </div>
+        <nav class="main-nav">
+            <a href="test.html">HOME</a> 
+            <a href="products.html">PRODUCTS</a>
+            <a href="cart.html">SHOPPING CART</a>
+            <a href="about us.html">ABOUT US</a>
+        </nav>
+        <button class="menu-toggle">☰</button>
+    </header>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>SMART HOME And Security SOLUTIONS</h1> 
+            <h2 class="central-control">Control Your World with Intelligence</h2> 
+        </div>
+        
+       
+        
+        <div class="carousel-container">
+            <div class="carousel-slide active">
+                <img src="Smart Home.jpg" alt="Smart Home Living Room"> 
+            </div>
+            <div class="carousel-slide">
+                <img src="7-2-scaled.jpg" alt="Smart Kitchen Appliances">
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1579780000000-000000000002?q=80&w=1920&auto=format&fit=crop" alt="Home Security System">
+            </div>
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1579780000000-000000000003?q=80&w=1920&auto=format&fit=crop" alt="Smart Lighting Setup">
+            </div>
+
+            <a class="carousel-btn prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="carousel-btn next" onclick="plusSlides(1)">&#10095;</a>
+
+            <div class="carousel-dots">
+                <span class="dot active" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSlide(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+        </div>
+        
+       
+    </div>
+    
+    <a href="contact.html" class="floating-inquiry-btn">
+        INQUIRY
+    </a>
+
+    <footer>
+        <p class="copyright">Copyright © 2025 softwsitch. All rights reserved.</p> 
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <span>|</span>
+            <a href="#">Terms of Use</a>
+        </div> 
+    </footer>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        // التحكم بالأسهم التالية/السابقة
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        // التحكم بالنقاط الصغيرة
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("carousel-slide");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}    
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+        }
+
+        // تشغيل عرض الشرائح تلقائياً كل 5 ثوانٍ
+        let autoSlideInterval;
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(function() {
+                plusSlides(1);
+            }, 5000); // غيّر هذا الرقم للتحكم في سرعة التغيير (بالمللي ثانية)
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        // ابدأ العرض التلقائي عند تحميل الصفحة
+        startAutoSlide();
+
+        // أوقف العرض التلقائي عند التفاعل اليدوي واستأنفه بعد فترة قصيرة
+        document.querySelector('.carousel-container').addEventListener('mouseover', stopAutoSlide);
+        document.querySelector('.carousel-container').addEventListener('mouseleave', startAutoSlide);
+        document.querySelectorAll('.carousel-btn, .dot').forEach(item => {
+            item.addEventListener('click', () => {
+                stopAutoSlide();
+            });
+        });
+    </script>
+</body>
+</html>
