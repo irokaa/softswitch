@@ -57,52 +57,45 @@
         }
 
         /* Header Styles */
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
+        /* ********** 1. شريط التنقل العلوي ********** */
+        .new-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 0;
+            padding: 15px 40px;
+            background: var(--white);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            direction: ltr;
         }
-
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
             font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-blue);
+            font-weight: bold;
+            color: var(--primary-text-new);
+            display: flex; 
+            align-items: center;
         }
-
-        .logo-icon {
-            font-size: 28px;
-            color: var(--primary-blue);
+        .company-logo {
+            height: 30px; 
+            width: auto;
+            margin-right: 10px; 
         }
-
         .nav-menu {
             display: flex;
-            gap: 32px;
+            align-items: center;
         }
-
         .nav-link {
             font-weight: 500;
             color: var(--gray-700);
             transition: var(--transition);
             position: relative;
             padding: 8px 0;
+            margin-left: 25px;
+            text-transform: uppercase;
+            font-size: 14px;
         }
-
         .nav-link:hover {
             color: var(--primary-blue);
         }
-
         .nav-link::after {
             content: '';
             position: absolute;
@@ -113,19 +106,15 @@
             background-color: var(--primary-blue);
             transition: var(--transition);
         }
-
         .nav-link:hover::after {
             width: 100%;
         }
-
         .nav-link.active {
             color: var(--primary-blue);
         }
-
         .nav-link.active::after {
             width: 100%;
         }
-
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -563,6 +552,27 @@
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                padding: 20px;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .nav-link {
+                margin: 10px 0;
+                padding: 10px 0;
+                border-bottom: 1px solid var(--gray-200);
+                width: 100%;
+                text-align: center;
             }
             
             .mobile-menu-btn {
@@ -608,26 +618,23 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="index.html" class="logo">
-                    <i class="fas fa-bolt logo-icon"></i>
-                    SOFTSWITCH
-                </a>
-                
-                <nav class="nav-menu">
-                    <a href="test.html" class="nav-link">Home</a>
-                    <a href="products.html" class="nav-link">Products</a>
-                    <a href="about us.html" class="nav-link active">About Us</a>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                </nav>
-                
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
+    <header class="new-header">
+        <div class="logo">
+            <img src="WhatsApp Image 2025-10-20 à 16.56.42_e187fcc5.jpg" alt="Softswitch Logo" class="company-logo">
+            SOFTSWITCH
         </div>
+                
+        <nav class="nav-menu">
+            <a href="test.html" class="nav-link">HOME</a>
+            <a href="products.html" class="nav-link">PRODUCTS</a>
+            <a href="cart.html" class="nav-link">SHOPPING CART</a>
+            <a href="about us.html" class="nav-link active">ABOUT US</a>
+            <a href="contact.html" class="nav-link">CONTACT</a>
+        </nav>
+        
+        <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
     </header>
 
     <!-- Hero Section -->
@@ -914,7 +921,7 @@
         // Mobile menu toggle
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             const navMenu = document.querySelector('.nav-menu');
-            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+            navMenu.classList.toggle('active');
         });
     </script>
 </body>

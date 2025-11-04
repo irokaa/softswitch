@@ -135,6 +135,8 @@
             transition: var(--transition);
             position: relative;
             padding: 8px 0;
+            text-transform: uppercase;
+            font-size: 14px;
         }
 
         .nav-link:hover {
@@ -643,6 +645,27 @@
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                padding: 20px;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .nav-link {
+                margin: 10px 0;
+                padding: 10px 0;
+                border-bottom: 1px solid var(--gray-200);
+                width: 100%;
+                text-align: center;
             }
             
             .mobile-menu-btn {
@@ -755,13 +778,11 @@
         </div>
                 
                 <nav class="nav-menu">
-                    <a href="test.html" class="nav-link" data-i18n="nav.home">Home</a>
-                    <a href="products.html" class="nav-link" data-i18n="nav.products">Products</a>
-                    <a href="about us.html" class="nav-link" data-i18n="nav.about">About Us</a>
-                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
-                    <a href="cart.html" class="nav-link cart-icon active">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count">2</span> </a>
+                    <a href="test.html" class="nav-link" data-i18n="nav.home">HOME</a>
+                    <a href="products.html" class="nav-link" data-i18n="nav.products">PRODUCTS</a>
+                    <a href="cart.html" class="nav-link cart-icon active">SHOPPING CART</a>
+                    <a href="about us.html" class="nav-link" data-i18n="nav.about">ABOUT US</a>
+                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">CONTACT</a>
                     
                     <div class="language-switcher">
                         <button class="language-btn active" data-lang="en">
@@ -956,12 +977,12 @@
         // =========================================================
         const translations = {
             en: {
-                "nav.home": "Home",
-                "nav.products": "Products",
-                "nav.solutions": "Solutions",
-                "nav.projects": "Projects",
-                "nav.about": "About Us",
-                "nav.contact": "Contact",
+                "nav.home": "HOME",
+                "nav.products": "PRODUCTS",
+                "nav.solutions": "SOLUTIONS",
+                "nav.projects": "PROJECTS",
+                "nav.about": "ABOUT US",
+                "nav.contact": "CONTACT",
                 "cart.title": "Your Shopping Cart",
                 "cart.subtitle": "Review your items and proceed to checkout",
                 "cart.itemsTitle": "Your Items ({{count}} products)", // تم تعديل هذا ليناسب JS
@@ -1211,6 +1232,12 @@
             
             // التأكد من تحديث الإجمالي بناءً على القيم الافتراضية
             updateCartTotal(); 
+            
+            // إضافة وظيفة القائمة المتنقلة
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+                const navMenu = document.querySelector('.nav-menu');
+                navMenu.classList.toggle('active');
+            });
         });
     </script>
 </body>

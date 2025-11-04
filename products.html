@@ -44,6 +44,7 @@
 
         body[dir="rtl"] {
             font-family: 'Almarai', sans-serif;
+            text-align: right;
         }
 
         a {
@@ -71,6 +72,11 @@
             position: relative;
         }
 
+        body[dir="rtl"] .language-switcher {
+            margin-right: 20px;
+            margin-left: 0;
+        }
+
         .language-btn {
             background: var(--gray-100);
             border: 1px solid var(--gray-200);
@@ -82,6 +88,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 14px;
         }
 
         .language-btn:hover {
@@ -95,38 +102,41 @@
         }
 
         /* Header Styles */
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
+        .new-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 0;
+            padding: 15px 40px;
+            background: var(--white);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            direction: ltr; /* لضمان ترتيب العناصر في الرأس بشكل صحيح */
+        }
+        
+        body[dir="rtl"] .new-header {
+            direction: rtl; /* إعادة تعيين الرأس إلى RTL عندما تكون الصفحة عربية */
         }
 
         .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--gray-900);
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-blue);
         }
 
-        .logo-icon {
-            font-size: 28px;
-            color: var(--primary-blue);
+        .company-logo {
+            height: 30px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        body[dir="rtl"] .company-logo {
+            margin-right: 0;
+            margin-left: 10px;
         }
 
         .nav-menu {
             display: flex;
-            gap: 32px;
             align-items: center;
         }
 
@@ -136,6 +146,14 @@
             transition: var(--transition);
             position: relative;
             padding: 8px 0;
+            margin-left: 25px;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        body[dir="rtl"] .nav-link {
+            margin-left: 0;
+            margin-right: 25px;
         }
 
         .nav-link:hover {
@@ -153,6 +171,11 @@
             transition: var(--transition);
         }
 
+        body[dir="rtl"] .nav-link::after {
+            left: auto;
+            right: 0;
+        }
+
         .nav-link:hover::after {
             width: 100%;
         }
@@ -164,39 +187,21 @@
         .nav-link.active::after {
             width: 100%;
         }
-
-        .cart-icon {
-            position: relative;
-        }
-
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background-color: var(--accent-green);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
+        
+        /* Mobile Menu Button */
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
             font-size: 24px;
-            color: var(--gray-700);
             cursor: pointer;
+            color: var(--gray-900);
+            padding: 5px;
         }
-
+        
         /* Hero Section */
         .hero {
-            padding: 80px 0 40px;
+            padding: 60px 0 40px;
             background: linear-gradient(135deg, var(--primary-blue) 0%, var(--blue-dark) 100%);
             color: white;
             text-align: center;
@@ -249,53 +254,58 @@
             margin-bottom: 16px;
         }
 
-        .section-header p {
-            font-size: 18px;
-            color: var(--gray-700);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Horizontal Category Navigation */
+        /* Horizontal Category Navigation - Matching Image Style */
         .categories-nav {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 0;
             margin-bottom: 40px;
             flex-wrap: wrap;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            padding: 10px;
+            background-color: var(--white);
+            border-radius: 8px;
+            justify-content: flex-start;
         }
 
         .category-item {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            padding: 15px 20px;
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+            padding: 10px 20px;
+            background: var(--gray-100);
             transition: var(--transition);
             cursor: pointer;
-            min-width: 100px;
+            margin: 5px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--gray-700);
         }
 
-        .category-item:hover, .category-item.active {
-            background: var(--primary-blue);
+        .category-item:hover {
+            background: var(--gray-200);
+        }
+
+        .category-item.active {
+            background: var(--gray-900); /* لون خلفية أغمق للفئة النشطة */
             color: white;
-            transform: translateY(-5px);
+            font-weight: 600;
+            box-shadow: var(--shadow);
         }
 
         .category-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
+            display: none; /* إخفاء الأيقونة لجعلها مشابهة للتصميم في الصورة */
         }
 
         .category-name {
             font-size: 14px;
-            font-weight: 500;
             text-align: center;
+            text-transform: capitalize; /* لجعل النص يبدو أكثر سلاسة */
         }
-
-        /* Product Grid */
+        
+        /* Product Grid - New Card Design for Clarity */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -310,92 +320,83 @@
             box-shadow: var(--shadow);
             transition: var(--transition);
             position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--gray-200);
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
         }
 
-        .product-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: var(--accent-green);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 600;
-            z-index: 2;
+        .product-image-container {
+            position: relative;
+            padding: 20px;
+            height: 220px; /* لتوحيد ارتفاع حاوية المنتج */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray-50);
         }
 
         .product-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* للحفاظ على نسب المنتج */
+            transition: var(--transition);
         }
 
         .product-info {
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .product-category {
             color: var(--primary-blue);
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 600;
             margin-bottom: 8px;
-            display: block;
+            text-transform: uppercase;
         }
 
         .product-title {
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--gray-900);
             margin-bottom: 12px;
-            line-height: 1.4;
+            line-height: 1.3;
         }
-
-        .product-description {
+        
+        .product-subtitle {
             font-size: 14px;
             color: var(--gray-700);
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .product-rating {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-
-        .stars {
-            color: gold;
-        }
-
-        .rating-count {
-            font-size: 14px;
-            color: var(--gray-700);
+            margin-bottom: 15px;
+            font-weight: 500;
         }
 
         .product-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid var(--gray-100);
         }
 
         .product-price {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
-            color: var(--accent-green);
+            color: var(--primary-blue);
         }
 
         .add-to-cart {
-            background: var(--primary-blue);
+            background: var(--accent-green);
             color: white;
             border: none;
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             padding: 10px 16px;
             font-weight: 600;
             cursor: pointer;
@@ -406,1113 +407,594 @@
         }
 
         .add-to-cart:hover {
-            background: var(--blue-dark);
-            transform: scale(1.05);
+            background: #0d9468;
+            transform: scale(1.02);
         }
-
-        /* Product Categories Section */
-        .product-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .category-card {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .category-header {
-            background: var(--primary-blue);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .category-title {
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        .category-products {
-            padding: 20px;
-        }
-
-        .category-product {
-            padding: 15px 0;
-            border-bottom: 1px solid var(--gray-200);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .category-product:last-child {
-            border-bottom: none;
-        }
-
-        .product-name {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-
-        .add-to-cart-small {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .add-to-cart-small:hover {
-            background: var(--blue-dark);
-        }
-
-        /* Features Section */
-        .features-section {
-            padding: 60px 0;
-            background: var(--white);
-        }
-
-        .features-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .feature {
-            text-align: center;
-            padding: 30px 20px;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-        }
-
-        .feature:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: var(--blue-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            color: var(--primary-blue);
-            font-size: 30px;
-        }
-
-        .feature h3 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 12px;
-        }
-
-        .feature p {
-            color: var(--gray-700);
-            line-height: 1.6;
-        }
-
-        /* Footer */
+        
+        /* Footer Styles (الأنماط الجديدة للتذييل) */
         footer {
             background-color: var(--gray-900);
             color: var(--gray-200);
-            padding: 60px 0 30px;
+            padding: 50px 0 20px;
+            font-size: 14px;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
             margin-bottom: 40px;
         }
 
         .footer-logo {
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: bold;
             color: var(--white);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo .fas {
+            color: var(--primary-blue);
+            margin-right: 8px;
         }
 
         .footer-about p {
             margin-bottom: 20px;
-            line-height: 1.7;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 16px;
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background-color: var(--primary-blue);
-            transform: translateY(-3px);
+            line-height: 1.8;
+            color: var(--gray-300);
         }
 
         .footer-heading {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 16px;
             color: var(--white);
             margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 5px;
+            display: inline-block;
         }
 
-        .footer-heading::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--primary-blue);
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
+        .footer-links li, .footer-contact li {
+            margin-bottom: 10px;
         }
 
         .footer-links a {
+            color: var(--gray-300);
             transition: var(--transition);
         }
 
         .footer-links a:hover {
             color: var(--primary-blue);
-            padding-left: 5px;
         }
 
         .footer-contact li {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 10px;
         }
 
-        .footer-contact i {
+        .footer-contact .fas {
             color: var(--primary-blue);
-            margin-top: 4px;
+            margin-top: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--gray-700);
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary-blue);
         }
 
         .footer-bottom {
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--gray-700);
+            padding-top: 20px;
+            text-align: center;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
 
-        .copyright {
-            font-size: 14px;
-        }
-
-        .footer-bottom-links {
-            display: flex;
-            gap: 20px;
+        .footer-bottom p {
+            color: var(--gray-300);
+            margin: 5px 0;
         }
 
         .footer-bottom-links a {
-            font-size: 14px;
+            color: var(--gray-300);
+            margin-left: 15px;
             transition: var(--transition);
+        }
+        
+        body[dir="rtl"] .footer-bottom-links a {
+            margin-left: 0;
+            margin-right: 15px;
         }
 
         .footer-bottom-links a:hover {
             color: var(--primary-blue);
         }
+        
+        /* RTL Specific Styles (إعادة ترتيب العناصر لـ RTL) */
+        body[dir="rtl"] .product-card {
+            text-align: right;
+        }
+        
+        body[dir="rtl"] .product-footer {
+            flex-direction: row-reverse;
+        }
+        
+        body[dir="rtl"] .cta-button .fas {
+            transform: scaleX(-1); /* عكس سهم CTA ليتناسب مع RTL */
+        }
+        
+        body[dir="rtl"] .language-btn .fas {
+            margin-right: 5px;
+        }
 
-        /* RTL Specific Styles */
-        body[dir="rtl"] .nav-link::after {
-            left: auto;
-            right: 0;
+        body[dir="rtl"] .footer-logo .fas {
+            margin-right: 0;
+            margin-left: 8px;
         }
         
-        body[dir="rtl"] .footer-heading::after {
-            left: auto;
-            right: 0;
-        }
-        
-        body[dir="rtl"] .footer-links a:hover {
-            padding-left: 0;
-            padding-right: 5px;
-        }
-        
-        body[dir="rtl"] .feature-icon,
-        body[dir="rtl"] .product-rating,
-        body[dir="rtl"] .product-footer,
-        body[dir="rtl"] .footer-contact li {
-            direction: ltr;
+        body[dir="rtl"] .footer-contact .fas {
+            margin-left: 10px;
+            margin-right: 0;
         }
 
         /* Responsive Styles */
-        @media (max-width: 992px) {
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .product-categories {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .nav-menu {
                 display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px; /* Adjust based on header height */
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                box-shadow: var(--shadow-lg);
+                z-index: 1000;
+                padding: 20px 0;
+                align-items: flex-start;
             }
             
+            body[dir="rtl"] .nav-menu {
+                align-items: flex-end;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .nav-link {
+                margin: 0;
+                padding: 10px 20px;
+                border-bottom: 1px solid var(--gray-200);
+                width: 100%;
+                text-align: left;
+            }
+            
+            body[dir="rtl"] .nav-link {
+                text-align: right;
+            }
+            
+            .language-switcher {
+                margin: 10px 20px;
+                width: calc(100% - 40px);
+                justify-content: center;
+                gap: 20px;
+            }
+
+            body[dir="rtl"] .language-switcher {
+                 margin-right: 20px;
+                 margin-left: 20px;
+            }
+
             .mobile-menu-btn {
                 display: block;
+                order: 1; /* Move button to a predictable spot */
             }
             
-            .hero h1 {
-                font-size: 36px;
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
-            
-            .hero p {
-                font-size: 18px;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
+
+            .new-header {
+                padding: 15px 20px;
             }
             
             .footer-bottom {
                 flex-direction: column;
-                gap: 20px;
-                text-align: center;
             }
-            
-            .language-switcher {
-                margin-left: 0;
-                margin-top: 10px;
-                justify-content: center;
-            }
-            
-            .product-categories {
-                grid-template-columns: 1fr;
-            }
-            
-            .categories-nav {
-                gap: 5px;
-            }
-            
-            .category-item {
-                min-width: 80px;
-                padding: 10px 15px;
-            }
-            
-            .category-icon {
-                font-size: 20px;
-            }
-            
-            .category-name {
-                font-size: 12px;
-            }
-        }
 
-        @media (max-width: 576px) {
-            .hero {
-                padding: 60px 0 30px;
+            .footer-bottom-links {
+                margin-top: 10px;
             }
             
-            .hero h1 {
-                font-size: 32px;
+            .footer-bottom-links a:first-child {
+                margin-left: 0; /* Remove margin for the first link in LTR mobile view */
             }
             
-            .section-header h2 {
-                font-size: 28px;
-            }
-            
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .features-container {
-                grid-template-columns: 1fr;
+             body[dir="rtl"] .footer-bottom-links a:first-child {
+                margin-right: 0;
             }
         }
     </style>
 </head>
 <body dir="ltr">
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="index.html" class="logo">
-                    <i class="fas fa-bolt logo-icon"></i>
-                    SOFTSWITCH
-                </a>
+    <header class="new-header">
+        <div class="logo">
+           <img src="WhatsApp Image 2025-10-20 à 16.56.42_e187fcc5.jpg" alt="Softswitch Logo" class="company-logo">
+            SOFTSWITCH
+        </div>
+        
+        <button class="mobile-menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
                 
-                <nav class="nav-menu">
-                    <a href="test.html" class="nav-link" data-i18n="nav.home">Home</a>
-                    <a href="products.html" class="nav-link active" data-i18n="nav.products">Products</a>
-                    <a href="about us.html" class="nav-link" data-i18n="nav.about">About Us</a>
-                    <a href="contact.html" class="nav-link" data-i18n="nav.contact">Contact</a>
-                    <a href="cart.html" class="nav-link cart-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count">3</span>
-                    </a>
-                    
-                    <div class="language-switcher">
-                        <button class="language-btn active" data-lang="en">
-                            <i class="fas fa-globe"></i>
-                            English
-                        </button>
-                        <button class="language-btn" data-lang="ar">
-                            <i class="fas fa-globe"></i>
-                            العربية
-                        </button>
-                    </div>
-                </nav>
-                
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
+        <nav class="nav-menu">
+            <a href="test.html" class="nav-link">HOME</a>
+            <a href="Products.html" class="nav-link active">PRODUCTS</a>
+            <a href="cart.html" class="nav-link cart-icon">SHOPPING CART</a>
+            <a href="about us.html" class="nav-link">ABOUT US</a>
+            
+            <div class="language-switcher">
+                <button class="language-btn active" data-lang="en">
+                    <i class="fas fa-globe"></i>
+                    English
+                </button>
+                <button class="language-btn" data-lang="ar">
+                    <i class="fas fa-globe"></i>
+                    العربية
                 </button>
             </div>
-        </div>
+        </nav>
+        
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1 data-i18n="hero.title">Smart Solutions for Modern Living</h1>
-            <p data-i18n="hero.subtitle">Discover our range of innovative products designed to make your life easier, safer, and more efficient.</p>
-            <a href="#products" class="cta-button" data-i18n="hero.cta">Shop Now <i class="fas fa-arrow-right"></i></a>
+            <h1>Smart Solutions for Modern Living</h1>
+            <p>Discover our range of innovative products designed to make your life easier, safer, and more efficient.</p>
+            <a href="#products" class="cta-button">Shop Now <i class="fas fa-arrow-right"></i></a>
         </div>
     </section>
 
-    <!-- Store Section -->
     <section class="store-section" id="products">
         <div class="container">
             <div class="section-header">
-                <h2 data-i18n="products.title">Our Products</h2>
-                <p data-i18n="products.subtitle">Explore our selection of high-quality smart home devices and automation solutions</p>
+                <h2>Our Smart Products</h2>
+                <p>Explore our selection of high-quality smart home devices and automation solutions</p>
             </div>
             
-            <!-- Horizontal Category Navigation -->
             <div class="categories-nav">
                 <div class="category-item active" data-category="all">
-                    <i class="fas fa-th-large category-icon"></i>
                     <span class="category-name">All Products</span>
                 </div>
-                <div class="category-item" data-category="entertainment">
-                    <i class="fas fa-tv category-icon"></i>
-                    <span class="category-name">Entertainment</span>
-                </div>
-                <div class="category-item" data-category="lighting">
-                    <i class="fas fa-lightbulb category-icon"></i>
-                    <span class="category-name">Lighting</span>
+                <div class="category-item" data-category="central-control">
+                    <span class="category-name">Central Control</span>
                 </div>
                 <div class="category-item" data-category="security">
-                    <i class="fas fa-shield-alt category-icon"></i>
                     <span class="category-name">Security</span>
                 </div>
-                <div class="category-item" data-category="automation">
-                    <i class="fas fa-robot category-icon"></i>
-                    <span class="category-name">Automation</span>
+                <div class="category-item" data-category="sensor">
+                    <span class="category-name">Sensor</span>
                 </div>
-                <div class="category-item" data-category="sensors">
-                    <i class="fas fa-broadcast-tower category-icon"></i>
-                    <span class="category-name">Sensors</span>
-                </div>
-                <div class="category-item" data-category="energy">
-                    <i class="fas fa-bolt category-icon"></i>
+                <div class="category-item" data-category="energy-saving">
                     <span class="category-name">Energy Saving</span>
+                </div>
+                <div class="category-item" data-category="lighting">
+                    <span class="category-name">Lighting</span>
+                </div>
+                <div class="category-item" data-category="hvac">
+                    <span class="category-name">HVAC</span>
+                </div>
+                <div class="category-item" data-category="entertainment">
+                    <span class="category-name">Entertainment</span>
                 </div>
             </div>
             
-            <!-- Products Grid -->
-            <div class="products-grid">
-                <div class="product-card" data-category="entertainment">
-                    <span class="product-badge" data-i18n="badges.bestseller">Bestseller</span>
-                    <img src="https://images.unsplash.com/photo-1563297007-0686b7003af7?q=80&w=1500&auto=format&fit=crop" alt="SPOT Universal Remote" class="product-image">
+            <div class="products-grid" id="product-list">
+                
+                <div class="product-card" data-category="central-control">
+                    <div class="product-image-container">
+                        <img src="DEFED Smart Station PRO.jpg" alt="DEFED Smart Station " class="product-image">
+                    </div>
                     <div class="product-info">
-                        <span class="product-category" data-i18n="categories.entertainment">Entertainment</span>
-                        <h3 class="product-title">SPOT-Universal Remote Controller</h3>
-                        <p class="product-description">Control all your entertainment devices with one smart remote. Compatible with TV, audio systems, and streaming devices.</p>
-                        <div class="product-rating">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span class="rating-count">(142)</span>
-                        </div>
+                        <span class="product-category"></span>
+                        <h3 class="product-title">DEFED Smart Station </h3>
+                        <p class="product-subtitle">Faster. Stronger. Further.</p>
                         <div class="product-footer">
-                            <div class="product-price">7,500 DA</div>
+                            <div class="product-price">18,500 DA</div>
                             <button class="add-to-cart">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                                <span>Add to Cart</span>
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <div class="product-card" data-category="lighting">
-                    <span class="product-badge" data-i18n="badges.popular">Popular</span>
-                    <img src="https://images.unsplash.com/photo-1629835749454-e0b68e914d3f?q=80&w=1500&auto=format&fit=crop" alt="Life Smart Switch" class="product-image">
-                    <div class="product-info">
-                        <span class="product-category" data-i18n="categories.lighting">Smart Lighting</span>
-                        <h3 class="product-title" data-i18n="products.1.title">Life Smart Wi-Fi Switch</h3>
-                        <p class="product-description" data-i18n="products.1.description">Control your lights from your smartphone easily and from anywhere in the world via Wi-Fi.</p>
-                        <div class="product-rating">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span class="rating-count">(128)</span>
-                        </div>
-                        <div class="product-footer">
-                            <div class="product-price">4,500 DA</div>
-                            <button class="add-to-cart">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span data-i18n="buttons.addToCart">Add to Cart</span>
-                            </button>
-                        </div>
+                <div class="product-card" data-category="central-control">
+                    <div class="product-image-container">
+                        <img src="DEFED Smart Station .jpg" alt="DEFED Smart Station" class="product-image">
                     </div>
-                </div>
-                
-                <div class="product-card" data-category="security">
-                    <span class="product-badge" data-i18n="badges.new">New</span>
-                    <img src="https://images.unsplash.com/photo-1558089687-b785ad8fe894?q=80&w=1500&auto=format&fit=crop" alt="Softswitch Security Camera" class="product-image">
                     <div class="product-info">
-                        <span class="product-category" data-i18n="categories.security">Security</span>
-                        <h3 class="product-title" data-i18n="products.2.title">Softswitch 1080p Security Camera</h3>
-                        <p class="product-description" data-i18n="products.2.description">Continuous security and instant high-definition monitoring via app with night vision feature.</p>
-                        <div class="product-rating">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <span class="rating-count">(94)</span>
-                        </div>
-                        <div class="product-footer">
-                            <div class="product-price">9,500 DA</div>
-                            <button class="add-to-cart">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span data-i18n="buttons.addToCart">Add to Cart</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="product-card" data-category="automation">
-                    <img src="https://images.unsplash.com/photo-1517404495768-e4b52b271d44?q=80&w=1500&auto=format&fit=crop" alt="Smart Thermostat" class="product-image">
-                    <div class="product-info">
-                        <span class="product-category" data-i18n="categories.automation">Automation</span>
-                        <h3 class="product-title" data-i18n="products.4.title">Smart Room Thermostat</h3>
-                        <p class="product-description" data-i18n="products.4.description">Precise control of home temperature with smart programming for perfect comfort and bill savings.</p>
-                        <div class="product-rating">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="far fa-star"></i>
-                            </div>
-                            <span class="rating-count">(42)</span>
-                        </div>
+                        <span class="product-category"></span>
+                        <h3 class="product-title">DEFED Smart Station (5G)</h3>
+                        <p class="product-subtitle">5G Super Gateway</p>
                         <div class="product-footer">
                             <div class="product-price">12,900 DA</div>
                             <button class="add-to-cart">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                                <span>Add to Cart</span>
                             </button>
                         </div>
                     </div>
                 </div>
-                
-                <div class="product-card" data-category="sensors">
-                    <img src="https://images.unsplash.com/photo-1594944980208-8e622ed0cc27?q=80&w=1500&auto=format&fit=crop" alt="Smart Motion Sensor" class="product-image">
+
+                <div class="product-card" data-category="sensor">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/150x200/f3f4f6/2563eb?text=Motion+Sensor+PRO" alt="Motion Sensor PRO" class="product-image">
+                    </div>
                     <div class="product-info">
-                        <span class="product-category" data-i18n="categories.sensors">Sensors</span>
-                        <h3 class="product-title" data-i18n="products.3.title">Smart Motion Sensor</h3>
-                        <p class="product-description" data-i18n="products.3.description">Responds to motion and light, automatically illuminates spaces and saves energy consumption.</p>
-                        <div class="product-rating">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span class="rating-count">(76)</span>
-                        </div>
+                        <span class="product-category"></span>
+                        <h3 class="product-title">Motion Sensor PRO</h3>
+                        <p class="product-subtitle">Tiny Motion Detector</p>
                         <div class="product-footer">
-                            <div class="product-price">3,800 DA</div>
+                            <div class="product-price">3,200 DA</div>
                             <button class="add-to-cart">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                                <span>Add to Cart</span>
                             </button>
                         </div>
                     </div>
                 </div>
-                
-                <div class="product-card" data-category="energy">
-                    <span class="product-badge" data-i18n="badges.new">New</span>
-                    <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?q=80&w=1500&auto=format&fit=crop" alt="Energy Monitor" class="product-image">
+
+                <div class="product-card" data-category="sensor">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/200x200/f3f4f6/2563eb?text=Door+Sensor" alt="CUBE Door/Window Sensor" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category"></span>
+                        <h3 class="product-title">CUBE Door/Window Sensor</h3>
+                        <p class="product-subtitle">Open/Close Tracker</p>
+                        <div class="product-footer">
+                            <div class="product-price">2,800 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="sensor">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/200x200/f3f4f6/2563eb?text=Env+Sensor" alt="CUBE Environmental Sensor" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category"></span>
+                        <h3 class="product-title">CUBE Environmental Sensor</h3>
+                        <p class="product-subtitle">Pleasant Home Environment</p>
+                        <div class="product-footer">
+                            <div class="product-price">5,900 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="sensor">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/200x200/f3f4f6/2563eb?text=Air+Quality+Detector" alt="In-wall Air Quality Detector" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Sensor</span>
+                        <h3 class="product-title">In-wall Air Quality Detector (ZigBee)</h3>
+                        <p class="product-subtitle">Live Climate Data</p>
+                        <div class="product-footer">
+                            <div class="product-price">7,100 DA</div>
+                            <button class="add-to-cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Add to Cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="energy-saving">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/200x200/f3f4f6/2563eb?text=General+Controller" alt="General Controller" class="product-image">
+                    </div>
                     <div class="product-info">
                         <span class="product-category">Energy Saving</span>
-                        <h3 class="product-title">Smart Energy Monitor</h3>
-                        <p class="product-description">Track and optimize your home's energy consumption with real-time monitoring and smart recommendations.</p>
-                        <div class="product-rating">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <span class="rating-count">(58)</span>
-                        </div>
+                        <h3 class="product-title">General Controller</h3>
+                        <p class="product-subtitle">Third-Party Integration</p>
                         <div class="product-footer">
-                            <div class="product-price">6,500 DA</div>
+                            <div class="product-price">9,500 DA</div>
                             <button class="add-to-cart">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span data-i18n="buttons.addToCart">Add to Cart</span>
+                                <span>Add to Cart</span>
                             </button>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Product Categories Section -->
-            <div class="section-header">
-                <h2 data-i18n="featured.title">Product Categories</h2>
-                <p data-i18n="featured.subtitle">Browse our products by category</p>
-            </div>
-            
-            <div class="product-categories">
-                <!-- Central Control Category -->
-                <div class="category-card">
-                    <div class="category-header">
-                        <h3 class="category-title">Central Control</h3>
+
+                <div class="product-card" data-category="energy-saving">
+                    <div class="product-image-container">
+                        <img src="https://via.placeholder.com/200x200/f3f4f6/2563eb?text=Smart+Plug" alt="Smart Plug" class="product-image">
                     </div>
-                    <div class="category-products">
-                        <div class="category-product">
-                            <span class="product-name">Smart Home Hub</span>
-                            <span class="product-price">15,900 DA</span>
-                            <button class="add-to-cart-small">
+                    <div class="product-info">
+                        <span class="product-category">Energy Saving</span>
+                        <h3 class="product-title">Smart Plug (CoSS EU & FR)</h3>
+                        <p class="product-subtitle">Monitor Energy Usage</p>
+                        <div class="product-footer">
+                            <div class="product-price">3,500 DA</div>
+                            <button class="add-to-cart">
                                 <i class="fas fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                        <div class="category-product">
-                            <span class="product-name">Control Panel Pro</span>
-                            <span class="product-price">12,500 DA</span>
-                            <button class="add-to-cart-small">
-                                <i class="fas fa-shopping-cart"></i>
+                                <span>Add to Cart</span>
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Security Category -->
-                <div class="category-card">
-                    <div class="category-header">
-                        <h3 class="category-title">Security</h3>
-                    </div>
-                    <div class="category-products">
-                        <div class="category-product">
-                            <span class="product-name">Smart Security Camera</span>
-                            <span class="product-price">9,500 DA</span>
-                            <button class="add-to-cart-small">
-                                <i class="fas fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                        <div class="category-product">
-                            <span class="product-name">Smart Door Lock</span>
-                            <span class="product-price">11,200 DA</span>
-                            <button class="add-to-cart-small">
-                                <i class="fas fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                        <div class="category-product">
-                            <span class="product-name">Alarm System</span>
-                            <span class="product-price">7,800 DA</span>
-                            <button class="add-to-cart-small">
-                                <i class="fas fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
                 </div>
-                
-                <!-- Entertainment Category -->
-                <div class="category-card">
-                    <div class="category-header">
-                        <h3 class="category-title">Entertainment</h3>
-                    </div>
-                    <div class="category-products">
-                        <div class="category-product">
-                            <span class="product-name">SPOT-Universal Remote Controller</span>
-                            <span class="product-price">7,500 DA</span>
-                            <button class="add-to-cart-small">
-                                <i class="fas fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                        <div class="category-product">
-                            <span class="product-name">IR Device Integration</span>
-                            <span class="product-price">5,200 DA</span>
-                            <button class="add-to-cart-small">
-                                <i class="fas fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                        <div class="category-product">
-                            <span class="product-name">SPOT Mini</span>
-                            <span class="product-price">6,800 DA</span>
-                            <button class="add-to-cart-small">
-                                <i class="fas fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                        <div class="category-product">
-                            <span class="product-name">Smart IR Hub</span>
-                            <span class="product-price">4,900 DA</span>
-                            <button class="add-to-cart-small">
-                                <i class="fas fa-shopping-cart"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            
+            <div style="text-align: center;">
+                 <a href="#" class="cta-button" style="background-color: var(--accent-green);">View All Products <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 data-i18n="features.title">Why Choose Softswitch?</h2>
-                <p data-i18n="features.subtitle">We provide cutting-edge solutions for modern homes and businesses</p>
-            </div>
-            
-            <div class="features-container">
-                <div class="feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 data-i18n="features.1.title">Secure & Reliable</h3>
-                    <p data-i18n="features.1.description">All our products undergo rigorous testing to ensure maximum security and reliability for your home or business.</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3 data-i18n="features.2.title">Energy Efficient</h3>
-                    <p data-i18n="features.2.description">Our smart solutions help reduce energy consumption, saving you money while protecting the environment.</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3 data-i18n="features.3.title">24/7 Support</h3>
-                    <p data-i18n="features.3.description">Our technical support team is available around the clock to assist you with any questions or issues.</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <h3 data-i18n="features.4.title">Fast Delivery</h3>
-                    <p data-i18n="features.4.description">We offer quick and reliable delivery services across Algeria to get your products to you as soon as possible.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <i class="fas fa-bolt"></i>
-                        SOFTSWITCH
+                        <i class="fas fa-cogs"></i>
+                        **SOFTSWITCH**
                     </div>
-                    <p data-i18n="footer.about">Specialists in low-voltage systems, automation, and smart solutions for residential and commercial applications.</p>
+                    <p>Providing the best smart home solutions for a modern, secure, and energy-efficient lifestyle.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-heading" data-i18n="footer.links">Quick Links</h3>
+                <div class="footer-links-group">
+                    <h3 class="footer-heading">Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
-                        <li><a href="products.html" data-i18n="nav.products">Products</a></li>
-                        <li><a href="solutions.html" data-i18n="nav.solutions">Solutions</a></li>
-                        <li><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
-                        <li><a href="about.html" data-i18n="nav.about">About Us</a></li>
+                        <li><a href="test.html">Home</a></li>
+                        <li><a href="Products.html">Products</a></li>
+                        <li><a href="cart.html">Shopping Cart</a></li>
+                        <li><a href="about us.html">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-heading" data-i18n="footer.services">Our Services</h3>
+                <div class="footer-links-group">
+                    <h3 class="footer-heading">Categories</h3>
                     <ul class="footer-links">
-                        <li><a href="#" data-i18n="services.1">Low-Voltage Systems</a></li>
-                        <li><a href="#" data-i18n="services.2">Automation Solutions</a></li>
-                        <li><a href="#" data-i18n="services.3">Security Systems</a></li>
-                        <li><a href="#" data-i18n="services.4">Network Infrastructure</a></li>
-                        <li><a href="#" data-i18n="services.5">Maintenance & Support</a></li>
+                        <li><a href="#" data-category="central-control">Central Control</a></li>
+                        <li><a href="#" data-category="sensor">Sensors</a></li>
+                        <li><a href="#" data-category="security">Security</a></li>
+                        <li><a href="#" data-category="lighting">Lighting</a></li>
+                        <li><a href="#" data-category="energy-saving">Energy Saving</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-contact">
-                    <h3 class="footer-heading" data-i18n="footer.contact">Contact Info</h3>
-                    <ul>
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span data-i18n="contact.address">Hassi Messaoud, Ouargla, Algeria</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>+213 656 415 281</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>soft_switch@yahoo.com</span>
-                        </li>
+                <div class="footer-links-group">
+                    <h3 class="footer-heading">Contact Info</h3>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> <span>123 Smart St, Tech City, 16000 ALGERIA</span></li>
+                        <li><i class="fas fa-phone"></i> <span>+213 550 123 456</span></li>
+                        <li><i class="fas fa-envelope"></i> <span>info@softswitch.com</span></li>
                     </ul>
                 </div>
             </div>
-            
             <div class="footer-bottom">
-                <p class="copyright" data-i18n="footer.copyright">Copyright © 2025 Softswitch. All rights reserved.</p>
+                <p class="copyright">&copy; <span id="current-year"></span> Softswitch. All rights reserved.</p>
                 <div class="footer-bottom-links">
-                    <a href="#" data-i18n="footer.privacy">Privacy Policy</a>
-                    <a href="#" data-i18n="footer.terms">Terms of Use</a>
-                    <a href="#" data-i18n="footer.sitemap">Sitemap</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
-
+    
     <script>
-        // Translation data
-        const translations = {
-            en: {
-                // Navigation
-                "nav.home": "Home",
-                "nav.products": "Products",
-                "nav.solutions": "Solutions",
-                "nav.projects": "Projects",
-                "nav.about": "About Us",
-                "nav.contact": "Contact",
-                
-                // Hero Section
-                "hero.title": "Smart Solutions for Modern Living",
-                "hero.subtitle": "Discover our range of innovative products designed to make your life easier, safer, and more efficient.",
-                "hero.cta": "Shop Now",
-                
-                // Products Section
-                "products.title": "Our Products",
-                "products.subtitle": "Explore our selection of high-quality smart home devices and automation solutions",
-                
-                // Featured Products
-                "featured.title": "Product Categories",
-                "featured.subtitle": "Browse our products by category",
-                
-                // Categories
-                "categories.entertainment": "Entertainment",
-                "categories.lighting": "Smart Lighting",
-                "categories.security": "Security",
-                "categories.automation": "Automation",
-                "categories.sensors": "Sensors",
-                
-                // Badges
-                "badges.bestseller": "Bestseller",
-                "badges.popular": "Popular",
-                "badges.new": "New",
-                
-                // Products
-                "products.1.title": "Life Smart Wi-Fi Switch",
-                "products.1.description": "Control your lights from your smartphone easily and from anywhere in the world via Wi-Fi.",
-                
-                "products.2.title": "Softswitch 1080p Security Camera",
-                "products.2.description": "Continuous security and instant high-definition monitoring via app with night vision feature.",
-                
-                "products.3.title": "Smart Motion Sensor",
-                "products.3.description": "Responds to motion and light, automatically illuminates spaces and saves energy consumption.",
-                
-                "products.4.title": "Smart Room Thermostat",
-                "products.4.description": "Precise control of home temperature with smart programming for perfect comfort and bill savings.",
-                
-                // Buttons
-                "buttons.addToCart": "Add to Cart",
-                
-                // Features
-                "features.title": "Why Choose Softswitch?",
-                "features.subtitle": "We provide cutting-edge solutions for modern homes and businesses",
-                "features.1.title": "Secure & Reliable",
-                "features.1.description": "All our products undergo rigorous testing to ensure maximum security and reliability for your home or business.",
-                "features.2.title": "Energy Efficient",
-                "features.2.description": "Our smart solutions help reduce energy consumption, saving you money while protecting the environment.",
-                "features.3.title": "24/7 Support",
-                "features.3.description": "Our technical support team is available around the clock to assist you with any questions or issues.",
-                "features.4.title": "Fast Delivery",
-                "features.4.description": "We offer quick and reliable delivery services across Algeria to get your products to you as soon as possible.",
-                
-                // Footer
-                "footer.about": "Specialists in low-voltage systems, automation, and smart solutions for residential and commercial applications.",
-                "footer.links": "Quick Links",
-                "footer.services": "Our Services",
-                "footer.contact": "Contact Info",
-                "footer.copyright": "Copyright © 2025 Softswitch. All rights reserved.",
-                "footer.privacy": "Privacy Policy",
-                "footer.terms": "Terms of Use",
-                "footer.sitemap": "Sitemap",
-                
-                // Services
-                "services.1": "Low-Voltage Systems",
-                "services.2": "Automation Solutions",
-                "services.3": "Security Systems",
-                "services.4": "Network Infrastructure",
-                "services.5": "Maintenance & Support",
-                
-                // Contact
-                "contact.address": "Hassi Messaoud, Ouargla, Algeria"
-            },
-            ar: {
-                // Navigation
-                "nav.home": "الرئيسية",
-                "nav.products": "المنتجات",
-                "nav.solutions": "الحلول",
-                "nav.projects": "المشاريع",
-                "nav.about": "من نحن",
-                "nav.contact": "اتصل بنا",
-                
-                // Hero Section
-                "hero.title": "حلول ذكية للحياة العصرية",
-                "hero.subtitle": "اكتشف مجموعة منتجاتنا المبتكرة المصممة لجعل حياتك أسهل وأكثر أمانًا وكفاءة.",
-                "hero.cta": "تسوق الآن",
-                
-                // Products Section
-                "products.title": "منتجاتنا",
-                "products.subtitle": "استكشف مجموعتنا من أجهزة المنزل الذكي عالية الجودة وحلول الأتمتة",
-                
-                // Featured Products
-                "featured.title": "فئات المنتجات",
-                "featured.subtitle": "تصفح منتجاتنا حسب الفئة",
-                
-                // Categories
-                "categories.entertainment": "الترفيه",
-                "categories.lighting": "الإضاءة الذكية",
-                "categories.security": "الأمان",
-                "categories.automation": "الأتمتة",
-                "categories.sensors": "المستشعرات",
-                
-                // Badges
-                "badges.bestseller": "الأكثر مبيعاً",
-                "badges.popular": "شائع",
-                "badges.new": "جديد",
-                
-                // Products
-                "products.1.title": "مفتاح لايف سمارت الذكي",
-                "products.1.description": "تحكم في إضاءتك من هاتفك الذكي بسهولة ومن أي مكان في العالم عبر الواي فاي.",
-                
-                "products.2.title": "كاميرا سوفت سويش 1080p للأمان",
-                "products.2.description": "أمان مستمر ومراقبة فورية عالية الدقة عبر التطبيق مع خاصية الرؤية الليلية.",
-                
-                "products.3.title": "مستشعر حركة ذكي",
-                "products.3.description": "يتفاعل مع الحركة والضوء، يضيء المساحات تلقائياً ويوفر استهلاك الطاقة.",
-                
-                "products.4.title": "منظم حرارة ذكي للغرف",
-                "products.4.description": "تحكم دقيق في درجة حرارة المنزل ببرمجة ذكية لراحة مثالية وتوفير في الفواتير.",
-                
-                // Buttons
-                "buttons.addToCart": "أضف إلى السلة",
-                
-                // Features
-                "features.title": "لماذا تختار سوفت سويش؟",
-                "features.subtitle": "نوفر حلولاً متطورة للمنازل والشركات الحديثة",
-                "features.1.title": "آمن وموثوق",
-                "features.1.description": "جميع منتجاتنا تخضع لاختبارات صارمة لضمان أقصى درجات الأمان والموثوقية لمنزلك أو عملك.",
-                "features.2.title": "موفر للطاقة",
-                "features.2.description": "حلولنا الذكية تساعد في تقليل استهلاك الطاقة، مما يوفر لك المال مع حماية البيئة.",
-                "features.3.title": "دعم على مدار الساعة",
-                "features.3.description": "فريق الدعم الفني لدينا متاح على مدار الساعة لمساعدتك في أي استفسارات أو مشاكل.",
-                "features.4.title": "توصيل سريع",
-                "features.4.description": "نوفر خدمات توصيل سريعة وموثوقة في جميع أنحاء الجزائر لتوصيل منتجاتك إليك في أسرع وقت ممكن.",
-                
-                // Footer
-                "footer.about": "متخصصون في أنظمة الجهد المنخفض والأتمتة والحلول الذكية للتطبيقات السكنية والتجارية.",
-                "footer.links": "روابط سريعة",
-                "footer.services": "خدماتنا",
-                "footer.contact": "معلومات الاتصال",
-                "footer.copyright": "حقوق الطبع © 2025 سوفت سويش. جميع الحقوق محفوظة.",
-                "footer.privacy": "سياسة الخصوصية",
-                "footer.terms": "شروط الاستخدام",
-                "footer.sitemap": "خريطة الموقع",
-                
-                // Services
-                "services.1": "أنظمة الجهد المنخفض",
-                "services.2": "حلول الأتمتة",
-                "services.3": "أنظمة الأمان",
-                "services.4": "البنية التحتية للشبكات",
-                "services.5": "الصيانة والدعم",
-                
-                // Contact
-                "contact.address": "حاسي مسعود، ورقلة، الجزائر"
-            }
-        };
+        // إعداد السنة الحالية في التذييل
+        document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // Language switching functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const languageButtons = document.querySelectorAll('.language-btn');
-            let currentLang = 'en';
-            
-            // Set initial language
-            updateLanguage(currentLang);
-            
-            // Add event listeners to language buttons
-            languageButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const lang = this.getAttribute('data-lang');
-                    if (lang !== currentLang) {
-                        currentLang = lang;
-                        updateLanguage(currentLang);
-                        
-                        // Update active button
-                        languageButtons.forEach(btn => btn.classList.remove('active'));
-                        this.classList.add('active');
-                    }
-                });
-            });
-            
-            function updateLanguage(lang) {
-                // Update all elements with data-i18n attribute
-                document.querySelectorAll('[data-i18n]').forEach(element => {
-                    const key = element.getAttribute('data-i18n');
-                    if (translations[lang] && translations[lang][key]) {
-                        element.textContent = translations[lang][key];
-                    }
-                });
+        // وظيفة تبديل القائمة المتنقلة (Mobile Menu)
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.toggle('active');
+            // تغيير أيقونة زر القائمة لتبدو كإغلاق X عند فتح القائمة
+            const menuBtnIcon = document.querySelector('.mobile-menu-btn .fa-bars, .mobile-menu-btn .fa-times');
+            if (navMenu.classList.contains('active')) {
+                menuBtnIcon.classList.remove('fa-bars');
+                menuBtnIcon.classList.add('fa-times');
+            } else {
+                menuBtnIcon.classList.remove('fa-times');
+                menuBtnIcon.classList.add('fa-bars');
+            }
+        }
+
+        // وظيفة تبديل اللغة
+        document.querySelectorAll('.language-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // إزالة التنشيط من جميع الأزرار
+                document.querySelectorAll('.language-btn').forEach(btn => btn.classList.remove('active'));
+                // تفعيل الزر الحالي
+                this.classList.add('active');
                 
-                // Update HTML direction
-                document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-                
-                // Update font family for Arabic
+                const lang = this.getAttribute('data-lang');
+                const body = document.body;
+
                 if (lang === 'ar') {
-                    document.body.style.fontFamily = "'Almarai', sans-serif";
+                    body.setAttribute('dir', 'rtl');
+                    // يمكنك هنا إضافة منطق لتغيير النصوص إلى العربية
+                    // alert('Language switched to Arabic. (Requires full localization logic)');
                 } else {
-                    document.body.style.fontFamily = "'Almarai', sans-serif";
+                    body.setAttribute('dir', 'ltr');
+                    // يمكنك هنا إضافة منطق لتغيير النصوص إلى الإنجليزية
+                    // alert('Language switched to English. (Requires full localization logic)');
                 }
-                
-                // Save language preference
-                localStorage.setItem('preferred-language', lang);
-            }
-            
-            // Check for saved language preference
-            const savedLang = localStorage.getItem('preferred-language');
-            if (savedLang) {
-                currentLang = savedLang;
-                updateLanguage(currentLang);
-                
-                // Update active button
-                languageButtons.forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.getAttribute('data-lang') === currentLang) {
-                        btn.classList.add('active');
+            });
+        });
+
+        // وظيفة تصفية المنتجات حسب الفئة
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // إزالة التنشيط من جميع فئات شريط التنقل
+                document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+                // تفعيل الفئة الحالية
+                this.classList.add('active');
+
+                const category = this.getAttribute('data-category');
+                const products = document.querySelectorAll('.product-card');
+
+                products.forEach(product => {
+                    const productCategory = product.getAttribute('data-category');
+                    if (category === 'all' || productCategory === category) {
+                        product.style.display = 'flex';
+                    } else {
+                        product.style.display = 'none';
                     }
-                });
-            }
-            
-            // Mobile menu toggle
-            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-                const navMenu = document.querySelector('.nav-menu');
-                navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-            });
-
-            // Category filtering functionality
-            document.querySelectorAll('.category-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    // Remove active class from all items
-                    document.querySelectorAll('.category-item').forEach(cat => {
-                        cat.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked item
-                    this.classList.add('active');
-                    
-                    const category = this.getAttribute('data-category');
-                    const productCards = document.querySelectorAll('.product-card');
-                    
-                    // Show/hide products based on category
-                    productCards.forEach(card => {
-                        if (category === 'all' || card.getAttribute('data-category') === category) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-
-            // Add to cart functionality
-            document.querySelectorAll('.add-to-cart, .add-to-cart-small').forEach(button => {
-                button.addEventListener('click', function() {
-                    const productCard = this.closest('.product-card') || this.closest('.category-product');
-                    const productTitle = productCard.querySelector('.product-title') ? 
-                        productCard.querySelector('.product-title').textContent : 
-                        productCard.querySelector('.product-name').textContent;
-                    const productPrice = productCard.querySelector('.product-price').textContent;
-                    
-                    // Update cart count
-                    const cartCount = document.querySelector('.cart-count');
-                    cartCount.textContent = parseInt(cartCount.textContent) + 1;
-                    
-                    // Show confirmation
-                    alert(`${currentLang === 'en' ? 'Added' : 'تم إضافة'} ${productTitle} ${currentLang === 'en' ? 'to your cart for' : 'إلى سلة التسوق بقيمة'} ${productPrice}`);
                 });
             });
         });
+        
+        // ربط روابط التذييل الخاصة بالفئات بوظيفة التصفية
+        document.querySelectorAll('footer .footer-links a[data-category]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const category = this.getAttribute('data-category');
+                const targetCategoryItem = document.querySelector(`.categories-nav .category-item[data-category="${category}"]`);
+                if (targetCategoryItem) {
+                    targetCategoryItem.click(); // يحاكي النقر على الفئة في قائمة الفئات الرئيسية
+                    // تمرير الصفحة إلى قسم المنتجات
+                    document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
     </script>
 </body>
 </html>
