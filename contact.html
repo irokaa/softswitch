@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* CSS Variables */
         :root {
             --primary-blue: #2563eb;
             --blue-dark: #1d4ed8;
@@ -26,7 +25,6 @@
             --transition: all 0.3s ease;
         }
 
-        /* Reset and Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -38,15 +36,17 @@
             line-height: 1.6;
             color: var(--gray-700);
             background-color: var(--gray-50);
+            direction: ltr;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
+        body[data-lang="ar"] {
+            direction: rtl;
+            text-align: right;
         }
 
-        ul {
-            list-style: none;
+        body[data-lang="fr"] {
+            direction: ltr;
+            text-align: left;
         }
 
         .container {
@@ -56,8 +56,7 @@
             padding: 0 20px;
         }
 
-       
-        /* ********** 1. شريط التنقل العلوي ********** */
+        /* Header */
         .new-header {
             display: flex;
             justify-content: space-between;
@@ -67,47 +66,84 @@
             box-shadow: 0 1px 4px rgba(0,0,0,0.05);
             direction: ltr;
         }
+
+        body[data-lang="ar"] .new-header {
+            direction: rtl;
+        }
+
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: var(--primary-text-new);
-            display: flex; 
+            color: var(--gray-900);
+            display: flex;
             align-items: center;
         }
+
         .company-logo {
-            height: 30px; 
+            height: 30px;
             width: auto;
-            margin-right: 10px; 
+            margin-right: 10px;
         }
+
+        body[data-lang="ar"] .company-logo {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+
         .main-nav {
             display: flex;
             align-items: center;
         }
-        .main-nav a {
-            text-decoration: none;
-            color: var(--gray-700);
-            margin-left: 25px;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .main-nav a:hover {
-            color: var(--primary-blue);
-        }
+
         .nav-menu {
             display: flex;
             align-items: center;
         }
+
+        body[data-lang="ar"] .nav-menu {
+            direction: rtl;
+        }
+
         .nav-link {
             margin-left: 25px;
             font-weight: 500;
+            text-decoration: none;
+            color: var(--gray-700);
             transition: var(--transition);
         }
-        .nav-link:hover, .nav-link.active {
+
+        body[data-lang="ar"] .nav-link {
+            margin-left: 0;
+            margin-right: 25px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
             color: var(--primary-blue);
         }
+
+        .lang-switcher {
+            margin-right: 25px;
+        }
+
+        body[data-lang="ar"] .lang-switcher {
+            margin-right: 0;
+            margin-left: 25px;
+        }
+
+        .lang-switcher select {
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-200);
+            background-color: var(--gray-50);
+            color: var(--gray-700);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
         .mobile-menu-btn {
-            display: none; 
+            display: none;
             background: none;
             border: none;
             font-size: 24px;
@@ -148,14 +184,31 @@
             align-items: start;
         }
 
-        .contact-info {
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        /* Contact Info */
+        .contact-info,
+        .contact-form {
             background: var(--white);
             border-radius: var(--border-radius);
             padding: 40px;
             box-shadow: var(--shadow);
         }
 
-        .contact-info h2 {
+        @media (max-width: 576px) {
+            .contact-info,
+            .contact-form {
+                padding: 30px 20px;
+            }
+        }
+
+        .contact-info h2,
+        .contact-form h2 {
             font-size: 28px;
             font-weight: 600;
             color: var(--gray-900);
@@ -164,6 +217,7 @@
             border-bottom: 2px solid var(--blue-light);
         }
 
+        /* Contact Details */
         .contact-details {
             display: flex;
             flex-direction: column;
@@ -174,6 +228,11 @@
             display: flex;
             align-items: flex-start;
             gap: 16px;
+        }
+
+        body[data-lang="ar"] .contact-item {
+            flex-direction: row-reverse;
+            text-align: right;
         }
 
         .contact-icon {
@@ -196,21 +255,19 @@
             margin-bottom: 4px;
         }
 
-        .contact-text p {
-            color: var(--gray-700);
-            margin-bottom: 4px;
-        }
-
         .contact-link {
             color: var(--primary-blue);
             font-weight: 500;
             transition: var(--transition);
+            display: block;
+            margin-bottom: 4px;
         }
 
         .contact-link:hover {
             color: var(--blue-dark);
         }
 
+        /* Company Description */
         .company-description {
             background-color: var(--blue-light);
             padding: 24px;
@@ -225,26 +282,7 @@
             margin-bottom: 12px;
         }
 
-        .company-description p {
-            line-height: 1.7;
-        }
-
-        .contact-form {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            box-shadow: var(--shadow);
-        }
-
-        .contact-form h2 {
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid var(--blue-light);
-        }
-
+        /* Form */
         .form-group {
             margin-bottom: 24px;
         }
@@ -264,6 +302,10 @@
             font-family: 'Inter', sans-serif;
             font-size: 16px;
             transition: var(--transition);
+        }
+
+        body[data-lang="ar"] .form-control {
+            text-align: right;
         }
 
         .form-control:focus {
@@ -315,27 +357,59 @@
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow-lg);
+            position: relative;
         }
 
-        .map-placeholder {
+        @media (max-width: 576px) {
+            .map-container {
+                height: 300px;
+            }
+        }
+
+        #google-map {
+            width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--blue-light) 0%, var(--gray-100) 100%);
-            display: flex;
-            flex-direction: column;
+            border: none;
+        }
+
+        .map-overlay {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: var(--white);
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .map-overlay {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+            }
+        }
+
+        .map-link-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            color: var(--gray-700);
+            gap: 6px;
+            text-decoration: none;
         }
 
-        .map-placeholder i {
-            font-size: 64px;
-            margin-bottom: 16px;
-            color: var(--primary-blue);
-        }
-
-        .map-placeholder p {
-            font-size: 18px;
-            font-weight: 500;
+        .map-link-btn:hover {
+            background-color: var(--blue-dark);
+            transform: translateY(-2px);
         }
 
         /* FAQ Section */
@@ -372,6 +446,16 @@
             background-color: var(--gray-50);
             cursor: pointer;
             transition: var(--transition);
+        }
+
+        @media (max-width: 576px) {
+            .faq-question {
+                padding: 15px;
+            }
+
+            .faq-question h3 {
+                font-size: 16px;
+            }
         }
 
         .faq-question:hover {
@@ -437,6 +521,13 @@
             flex-wrap: wrap;
         }
 
+        @media (max-width: 768px) {
+            .social-links-large {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
         .social-link-large {
             display: flex;
             align-items: center;
@@ -446,6 +537,14 @@
             color: white;
             border-radius: var(--border-radius);
             transition: var(--transition);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .social-link-large {
+                width: 200px;
+                justify-content: center;
+            }
         }
 
         .social-link-large:hover {
@@ -465,6 +564,35 @@
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 40px;
             margin-bottom: 40px;
+        }
+
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .footer-about {
+            grid-column: 1 / 2;
+        }
+
+        @media (max-width: 992px) {
+            .footer-about {
+                grid-column: 1 / 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-about {
+                grid-column: 1 / 2;
+            }
         }
 
         .footer-logo {
@@ -496,6 +624,8 @@
             align-items: center;
             justify-content: center;
             transition: var(--transition);
+            text-decoration: none;
+            color: white;
         }
 
         .social-link:hover {
@@ -522,17 +652,29 @@
             background-color: var(--primary-blue);
         }
 
+        body[data-lang="ar"] .footer-heading::after {
+            left: unset;
+            right: 0;
+        }
+
         .footer-links li {
             margin-bottom: 12px;
         }
 
         .footer-links a {
             transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
         }
 
         .footer-links a:hover {
             color: var(--primary-blue);
             padding-left: 5px;
+        }
+
+        body[data-lang="ar"] .footer-links a:hover {
+            padding-left: 0;
+            padding-right: 5px;
         }
 
         .footer-contact li {
@@ -542,9 +684,19 @@
             margin-bottom: 16px;
         }
 
+        body[data-lang="ar"] .footer-contact li {
+            text-align: right;
+            flex-direction: row-reverse;
+        }
+
         .footer-contact i {
             color: var(--primary-blue);
             margin-top: 4px;
+        }
+
+        body[data-lang="ar"] .footer-contact i {
+            margin-right: 0;
+            margin-left: 12px;
         }
 
         .footer-bottom {
@@ -553,6 +705,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
         }
 
         .copyright {
@@ -567,24 +727,15 @@
         .footer-bottom-links a {
             font-size: 14px;
             transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
         }
 
         .footer-bottom-links a:hover {
             color: var(--primary-blue);
         }
 
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .contact-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
+        /* Responsive Nav Menu */
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
@@ -598,11 +749,16 @@
                 z-index: 1000;
                 padding: 20px;
             }
-            
+
+            body[data-lang="ar"] .nav-menu {
+                left: unset;
+                right: 0;
+            }
+
             .nav-menu.active {
                 display: flex;
             }
-            
+
             .nav-link {
                 margin: 10px 0;
                 padding: 10px 0;
@@ -610,78 +766,57 @@
                 width: 100%;
                 text-align: center;
             }
-            
+
+            body[data-lang="ar"] .nav-link {
+                margin: 10px 0;
+            }
+
             .mobile-menu-btn {
                 display: block;
             }
-            
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 768px) {
             .hero h1 {
                 font-size: 36px;
             }
-            
+
             .hero p {
                 font-size: 18px;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .footer-bottom {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-
-            .social-links-large {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .social-link-large {
-                width: 200px;
-                justify-content: center;
             }
         }
 
         @media (max-width: 576px) {
-            .contact-info, .contact-form {
-                padding: 30px 20px;
-            }
-            
             .hero {
                 padding: 60px 0 30px;
             }
-            
+
             .hero h1 {
                 font-size: 32px;
-            }
-
-            .faq-question {
-                padding: 15px;
-            }
-
-            .faq-question h3 {
-                font-size: 16px;
             }
         }
     </style>
 </head>
-<body>
-    <!-- Header -->
+<body data-lang="en">
     <header class="new-header">
         <div class="logo">
-            <img src="WhatsApp Image 2025-10-20 à 16.56.42_e187fcc5.jpg" alt="Softswitch Logo" class="company-logo">
+            <img src="https://via.placeholder.com/150x50/2563eb/ffffff?text=SOFTSWITCH" alt="Softswitch Logo" class="company-logo">
             SOFTSWITCH
         </div>
         <nav class="main-nav">
+            <div class="lang-switcher">
+                <select id="languageSelector" onchange="updateLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
             <div class="nav-menu">
-                <a href="test.html" class="nav-link">HOME</a>
-                <a href="products.html" class="nav-link">PRODUCTS</a>
-                <a href="cart.html" class="nav-link">SHOPPING CART</a>
-                <a href="about us.html" class="nav-link">ABOUT US</a>
-                <a href="contact.html" class="nav-link active">CONTACT</a>
+                <a href="test.html" class="nav-link" data-en="HOME" data-ar="الرئيسية" data-fr="ACCUEIL">HOME</a>
+                <a href="products.html" class="nav-link" data-en="PRODUCTS" data-ar="المنتجات" data-fr="PRODUITS">PRODUCTS</a>
+                <a href="about us.html" class="nav-link" data-en="ABOUT US" data-ar="من نحن" data-fr="À PROPOS">ABOUT US</a>
+                <a href="contact.html" class="nav-link active" data-en="CONTACT" data-ar="اتصل بنا" data-fr="CONTACT">CONTACT</a>
             </div>
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
@@ -689,30 +824,27 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Get In Touch With Us</h1>
-            <p>We're here to answer any questions and provide the solutions you need for your low-voltage and automation systems.</p>
+            <h1 data-en="Get In Touch With Us" data-ar="تواصل معنا" data-fr="Contactez-nous">Get In Touch With Us</h1>
+            <p data-en="We're here to answer any questions and provide the solutions you need for your low-voltage and automation systems." data-ar="نحن هنا للإجابة على جميع أسئلتكم وتقديم الحلول التي تحتاجونها لأنظمة الجهد المنخفض والأتمتة الخاصة بكم." data-fr="Nous sommes là pour répondre à vos questions et vous fournir les solutions dont vous avez besoin pour vos systèmes basse tension et d'automatisation.">We're here to answer any questions and provide the solutions you need for your low-voltage and automation systems.</p>
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section class="contact-section">
         <div class="container">
             <div class="contact-container">
-                <!-- Contact Information -->
                 <div class="contact-info">
-                    <h2>Contact Information</h2>
+                    <h2 data-en="Contact Information" data-ar="معلومات الاتصال" data-fr="Informations de contact">Contact Information</h2>
                     <div class="contact-details">
                         <div class="contact-item">
                             <div class="contact-icon">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div class="contact-text">
-                                <h3>Email Address</h3>
+                                <h3 data-en="Email Address" data-ar="البريد الإلكتروني" data-fr="Adresse e-mail">Email Address</h3>
                                 <a href="mailto:soft_switch@yahoo.com" class="contact-link">soft_switch@yahoo.com</a>
-                                <p>We'll respond within 24 hours</p>
+                                <p data-en="We'll respond within 24 hours" data-ar="سوف نرد عليك في غضون 24 ساعة" data-fr="Nous vous répondrons dans les 24 heures">We'll respond within 24 hours</p>
                             </div>
                         </div>
                         
@@ -721,10 +853,9 @@
                                 <i class="fas fa-phone"></i>
                             </div>
                             <div class="contact-text">
-                                <h3>Phone Number</h3>
+                                <h3 data-en="Phone Number" data-ar="رقم الهاتف" data-fr="Numéro de téléphone">Phone Number</h3>
                                 <a href="tel:+213656415281" class="contact-link">+213 656 415 281</a>
-                                <p>Mon-Fri from 8am to 5pm</p>
-                            </div>
+                                <p data-en="Sat-Thu from 8am to 6pm" data-ar="من السبت إلى الخميس من الساعة 8 صباحًا حتى 6 مساءً" data-fr="Sam-Jeu de 8h à 18h">Sat-Thu from 8am to 6pm</p>                            </div>
                         </div>
                         
                         <div class="contact-item">
@@ -732,51 +863,50 @@
                                 <i class="fas fa-map-marker-alt"></i>
                             </div>
                             <div class="contact-text">
-                                <h3>Office Location</h3>
-                                <p>Hassi Messaoud, Ouargla</p>
-                                <p>Algeria</p>
+                                <h3 data-en="Office Location" data-ar="موقع المكتب" data-fr="Localisation du bureau">Office Location</h3>
+                                <p data-en="Hassi Messaoud, Ouargla" data-ar="حاسي مسعود، ورقلة" data-fr="Hassi Messaoud, Ouargla">Hassi Messaoud, Ouargla</p>
+                                <p data-en="Algeria" data-ar="الجزائر" data-fr="Algérie">Algeria</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="company-description">
-                        <h3>About Softswitch</h3>
-                        <p>Softswitch is a company specialized in the study and implementation of low-voltage and low-current networks: electrical, IT, telephone networks, surveillance, access control, alarm, and fire protection systems. We also offer remote control solutions for electrical and electronic installations, as well as commissioning and maintenance of automation systems.</p>
+                        <h3 data-en="About Softswitch" data-ar="حول سوفت سويتش" data-fr="À propos de Softswitch">About Softswitch</h3>
+                        <p data-en="Softswitch is a company specialized in the study and implementation of low-voltage and low-current networks: electrical, IT, telephone networks, surveillance, access control, alarm, and fire protection systems. We also offer remote control solutions for electrical and electronic installations, as well as commissioning and maintenance of automation systems." data-ar="سوفت سويتش هي شركة متخصصة في دراسة وتطبيق شبكات التيار المنخفض والجهد المنخفض: الشبكات الكهربائية، وشبكات تكنولوجيا المعلومات، وشبكات الهاتف، وأنظمة المراقبة، والتحكم في الوصول، والإنذار، وأنظمة الحماية من الحرائق. كما نقدم حلول التحكم عن بعد للمنشآت الكهربائية والإلكترونية، بالإضافة إلى تشغيل وصيانة أنظمة الأتمتة." data-fr="Softswitch est une entreprise spécialisée dans l'étude et la réalisation de réseaux basse tension et courants faibles : réseaux électriques, informatiques, téléphoniques, systèmes de surveillance, contrôle d'accès, alarme et protection incendie. Nous proposons également des solutions de contrôle à distance pour les installations électriques et électroniques, ainsi que la mise en service et la maintenance des systèmes d'automatisation.">Softswitch is a company specialized in the study and implementation of low-voltage and low-current networks: electrical, IT, telephone networks, surveillance, access control, alarm, and fire protection systems. We also offer remote control solutions for electrical and electronic installations, as well as commissioning and maintenance of automation systems.</p>
                     </div>
                 </div>
                 
-                <!-- Contact Form -->
                 <div class="contact-form">
-                    <h2>Send Us a Message</h2>
+                    <h2 data-en="Send Us a Message" data-ar="أرسل لنا رسالة" data-fr="Envoyez-nous un message">Send Us a Message</h2>
                     <form id="contactForm">
                         <div class="form-group">
-                            <label for="name" class="form-label">Full Name</label>
-                            <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+                            <label for="name" class="form-label" data-en="Full Name" data-ar="الاسم الكامل" data-fr="Nom complet">Full Name</label>
+                            <input type="text" id="name" class="form-control" data-en-placeholder="Enter your full name" data-ar-placeholder="أدخل اسمك الكامل" data-fr-placeholder="Entrez votre nom complet" placeholder="Enter your full name" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="email" class="form-label">Email Address</label>
-                            <input type="email" id="email" class="form-control" placeholder="Enter your email address" required>
+                            <label for="email" class="form-label" data-en="Email Address" data-ar="البريد الإلكتروني" data-fr="Adresse e-mail">Email Address</label>
+                            <input type="email" id="email" class="form-control" data-en-placeholder="Enter your email address" data-ar-placeholder="أدخل بريدك الإلكتروني" data-fr-placeholder="Entrez votre adresse e-mail" placeholder="Enter your email address" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="phone" class="form-label">Phone Number</label>
-                            <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+                            <label for="phone" class="form-label" data-en="Phone Number" data-ar="رقم الهاتف" data-fr="Numéro de téléphone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" data-en-placeholder="Enter your phone number" data-ar-placeholder="أدخل رقم هاتفك" data-fr-placeholder="Entrez votre numéro de téléphone" placeholder="Enter your phone number">
                         </div>
                         
                         <div class="form-group">
-                            <label for="subject" class="form-label">Subject</label>
-                            <input type="text" id="subject" class="form-control" placeholder="What is this regarding?" required>
+                            <label for="subject" class="form-label" data-en="Subject" data-ar="الموضوع" data-fr="Sujet">Subject</label>
+                            <input type="text" id="subject" class="form-control" data-en-placeholder="What is this regarding?" data-ar-placeholder="ما هو موضوع استفسارك؟" data-fr-placeholder="Quel est l'objet de votre demande ?" placeholder="What is this regarding?" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="message" class="form-label">Message</label>
-                            <textarea id="message" class="form-control" placeholder="How can we help you?" required></textarea>
+                            <label for="message" class="form-label" data-en="Message" data-ar="الرسالة" data-fr="Message">Message</label>
+                            <textarea id="message" class="form-control" data-en-placeholder="How can we help you?" data-ar-placeholder="كيف يمكننا مساعدتك؟" data-fr-placeholder="Comment pouvons-nous vous aider ?" placeholder="How can we help you?" required></textarea>
                         </div>
                         
                         <button type="submit" class="submit-btn">
                             <i class="fas fa-paper-plane"></i>
-                            Send Message
+                            <span data-en="Send Message" data-ar="أرسل الرسالة" data-fr="Envoyer le message">Send Message</span>
                         </button>
                     </form>
                 </div>
@@ -784,199 +914,235 @@
         </div>
     </section>
 
-    <!-- Map Section -->
     <section class="map-section">
         <div class="container">
-            <h2>Our Location</h2>
+            <h2 data-en="Our Location" data-ar="موقعنا" data-fr="Notre emplacement">Our Location</h2>
             <div class="map-container">
-                <div class="map-placeholder">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <p>Interactive Map - Hassi Messaoud, Ouargla</p>
+                <iframe 
+                    id="google-map"
+                    src="https://maps.google.com/maps?q=Hassi+Messaoud,+Ouargla&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                <div class="map-overlay">
+                    <a href="https://maps.google.com/maps?q=Hassi+Messaoud,+Ouargla&t=&z=13&ie=UTF8&iwloc=&output=embed" target="_blank" class="map-link-btn">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span data-en="Open in Google Maps" data-ar="فتح في خرائط جوجل" data-fr="Ouvrir dans Google Maps">Open in Google Maps</span>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
     <section class="faq-section">
         <div class="container">
-            <h2>Frequently Asked Questions</h2>
+            <h2 data-en="Frequently Asked Questions" data-ar="الأسئلة المتكررة" data-fr="Questions fréquentes">Frequently Asked Questions</h2>
             <div class="faq-container">
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>What areas do you serve?</h3>
+                        <h3 data-en="What areas do you serve?" data-ar="ما هي المناطق التي تخدمونها؟" data-fr="Quelles zones desservez-vous ?">What areas do you serve?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>We primarily serve clients in Hassi Messaoud and surrounding areas in Ouargla, but we also undertake projects throughout Algeria. Contact us to discuss your location and requirements.</p>
+                        <p data-en="We primarily serve the Hassi Messaoud and Ouargla regions in Algeria, but we are open to projects across the country depending on the scope." data-ar="نحن نخدم بشكل أساسي مناطق حاسي مسعود وورقلة في الجزائر، ولكننا منفتحون على المشاريع في جميع أنحاء البلاد حسب نطاق العمل." data-fr="Nous desservons principalement les régions de Hassi Messaoud et Ouargla en Algérie, mais nous sommes ouverts à des projets à travers tout le pays en fonction de leur envergure.">We primarily serve the Hassi Messaoud and Ouargla regions in Algeria, but we are open to projects across the country depending on the scope.</p>
                     </div>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>How long does a typical installation take?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Installation times vary depending on the scope of the project. A basic smart home system might take 1-2 days, while comprehensive commercial solutions can take several weeks. We provide detailed timelines during our consultation.</p>
-                    </div>
-                </div>
+                    
                 <div class="faq-item">
                     <div class="faq-question">
-                        <h3>Do you offer maintenance services?</h3>
+                        <h3 data-en="Do you offer maintenance services?" data-ar="هل تقدمون خدمات صيانة؟" data-fr="Offrez-vous des services de maintenance ?">Do you offer maintenance services?</h3>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Yes, we offer comprehensive maintenance and support packages for all our installations. Our team is available for regular check-ups, troubleshooting, and system updates to ensure optimal performance.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>What types of payment do you accept?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>We accept various payment methods including cash, bank transfers, and credit cards. We also offer flexible payment plans for larger projects to make our services more accessible.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>Do you provide warranties for your products and services?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, all our products come with manufacturer warranties, and our installation services are backed by a comprehensive service guarantee. We stand behind the quality of our work and are committed to customer satisfaction.</p>
+                        <p data-en="Yes, we provide comprehensive maintenance contracts for all the low-voltage and automation systems we install, as well as for existing systems." data-ar="نعم، نقدم عقود صيانة شاملة لجميع أنظمة الجهد المنخفض والأتمتة التي نقوم بتركيبها، وكذلك للأنظمة الموجودة مسبقاً." data-fr="Oui, nous proposons des contrats de maintenance complets pour tous les systèmes basse tension et d'automatisation que nous installons, ainsi que pour les systèmes existants.">Yes, we provide comprehensive maintenance contracts for all the low-voltage and automation systems we install, as well as for existing systems.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Social Section -->
     <section class="social-section">
         <div class="container">
-            <h2>Connect With Us</h2>
-            <p>Follow us on social media for updates, tips, and the latest in smart technology</p>
+            <h2 data-en="Connect With Us on Social Media" data-ar="تواصل معنا عبر وسائل التواصل الاجتماعي" data-fr="Connectez-vous avec nous sur les réseaux sociaux">Connect With Us on Social Media</h2>
+            <p data-en="Follow us to stay updated on our latest projects, news, and technical insights in low-voltage and automation solutions." data-ar="تابعنا لتبقى على اطلاع بآخر مشاريعنا، أخبارنا، ورؤى تقنية في حلول الجهد المنخفض والأتمتة." data-fr="Suivez-nous pour rester informé de nos derniers projets, actualités et aperçus techniques dans les solutions basse tension et d'automatisation.">Follow us to stay updated on our latest projects, news, and technical insights in low-voltage and automation solutions.</p>
             <div class="social-links-large">
-                <a href="#" class="social-link-large">
-                    <i class="fab fa-facebook-f"></i>
-                    <span>Facebook</span>
-                </a>
-                <a href="#" class="social-link-large">
-                    <i class="fab fa-twitter"></i>
-                    <span>Twitter</span>
-                </a>
-                <a href="#" class="social-link-large">
+                <a href="#" class="social-link-large" target="_blank">
                     <i class="fab fa-linkedin-in"></i>
-                    <span>LinkedIn</span>
+                    <span data-en="LinkedIn" data-ar="لينكد إن" data-fr="LinkedIn">LinkedIn</span>
                 </a>
-                <a href="#" class="social-link-large">
-                    <i class="fab fa-instagram"></i>
-                    <span>Instagram</span>
+                <a href="https://www.facebook.com/share/1C4ucDjWD8/" class="social-link-large" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                    <span data-en="Facebook" data-ar="فيسبوك" data-fr="Facebook">Facebook</span>
+                </a>
+                <a href="https://wa.me/213656415281" class="social-link-large" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <span data-en="WhatsApp" data-ar="واتساب" data-fr="WhatsApp">WhatsApp</span>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <i class="fas fa-bolt"></i>
                         SOFTSWITCH
                     </div>
-                    <p>Specialists in low-voltage systems, automation, and smart solutions for residential and commercial applications.</p>
+                    <p data-en="Specialists in low-voltage systems and industrial automation, providing smart and reliable solutions for complex projects." data-ar="متخصصون في أنظمة الجهد المنخفض والأتمتة الصناعية، نقدم حلولًا ذكية وموثوقة للمشاريع المعقدة." data-fr="Spécialistes des systèmes basse tension et de l'automatisation industrielle, nous fournissons des solutions intelligentes et fiables pour des projets complexes.">Specialists in low-voltage systems and industrial automation, providing smart and reliable solutions for complex projects.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/share/1C4ucDjWD8/" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/213656415281" target="_blank" class="social-link">
+                            <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-heading">Quick Links</h3>
+
+                <div class="footer-links-col">
+                    <h3 class="footer-heading" data-en="Quick Links" data-ar="روابط سريعة" data-fr="Liens rapides">Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="solutions.html">Solutions</a></li>
-                        <li><a href="projects.html">Projects</a></li>
-                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="test.html" data-en="Home" data-ar="الرئيسية" data-fr="Accueil">Home</a></li>
+                        <li><a href="products.html" data-en="Products" data-ar="المنتجات" data-fr="Produits">Products</a></li>
+                        <li><a href="about us.html" data-en="About Us" data-ar="من نحن" data-fr="À Propos">About Us</a></li>
+                        <li><a href="contact.html" data-en="Contact" data-ar="اتصل بنا" data-fr="Contact">Contact</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-heading">Our Services</h3>
+
+                <div class="footer-links-col">
+                    <h3 class="footer-heading" data-en="Our Services" data-ar="خدماتنا" data-fr="Nos services">Our Services</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Low-Voltage Systems</a></li>
-                        <li><a href="#">Automation Solutions</a></li>
-                        <li><a href="#">Security Systems</a></li>
-                        <li><a href="#">Network Infrastructure</a></li>
-                        <li><a href="#">Maintenance & Support</a></li>
+                        <li><a href="#" data-en="Low-Voltage Systems" data-ar="أنظمة الجهد المنخفض" data-fr="Systèmes Basse Tension">Low-Voltage Systems</a></li>
+                        <li><a href="#" data-en="Industrial Automation" data-ar="الأتمتة الصناعية" data-fr="Automatisation Industrielle">Industrial Automation</a></li>
+                        <li><a href="#" data-en="Networking" data-ar="الشبكات" data-fr="Réseautage">Networking</a></li>
+                        <li><a href="#" data-en="Security Systems" data-ar="أنظمة الأمن" data-fr="Systèmes de sécurité">Security Systems</a></li>
+                        <li><a href="#" data-en="Electrical Installation" data-ar="التثبيتات الكهربائية" data-fr="Des Installations électriques">Electrical Installation</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-contact">
-                    <h3 class="footer-heading">Contact Info</h3>
-                    <ul>
+
+                <div class="footer-contact-col">
+                    <h3 class="footer-heading" data-en="Contact Details" data-ar="تفاصيل الاتصال" data-fr="Coordonnées">Contact Details</h3>
+                    <ul class="footer-contact">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>Hassi Messaoud, Ouargla, Algeria</span>
+                            <span data-en="Address: 1850 Logts, Hassi Messaoud - Ouargla" data-ar="العنوان: 1850 سكن، حاسي مسعود - ورقلة" data-fr="Adresse : 1850 Logts, Hassi Messaoud - Ouargla">Hassi Messaoud, Ouargla, Algeria</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
-                            <span>+213 656 415 281</span>
+                            <a href="tel:+213656415281" data-en="+213 656 415 281" data-ar="+213 656 415 281" data-fr="+213 656 415 281">+213 656 415 281</a>
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span>soft_switch@yahoo.com</span>
+                            <a href="mailto:soft_switch@yahoo.com" data-en="soft_switch@yahoo.com" data-ar="soft_switch@yahoo.com" data-fr="soft_switch@yahoo.com">soft_switch@yahoo.com</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
-                <p class="copyright">Copyright © 2025 Softswitch. All rights reserved.</p>
+                <p class="copyright" data-en="&copy; 2025 Softswitch. All rights reserved." data-ar="&copy; 2025 سوفت سويتش. جميع الحقوق محفوظة." data-fr="&copy; 2025 Softswitch. Tous droits réservés.">&copy; 2025 Softswitch. All rights reserved.</p>
                 <div class="footer-bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Use</a>
-                    <a href="#">Sitemap</a>
+                    <a href="#" data-en="Privacy Policy" data-ar="سياسة الخصوصية" data-fr="Politique de confidentialité">Privacy Policy</a>
+                    <a href="#" data-en="Terms of Service" data-ar="شروط الخدمة" data-fr="Conditions d'utilisation">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Simple form submission handler
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        function updateLanguage(lang) {
+            document.body.setAttribute('data-lang', lang);
             
-            // In a real application, you would send the form data to a server here
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
-        
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navMenu = document.querySelector('.nav-menu');
-            navMenu.classList.toggle('active');
-        });
-
-        // FAQ functionality
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentElement;
-                item.classList.toggle('active');
+            document.querySelectorAll('[data-en], [data-ar], [data-fr]').forEach(element => {
+                const translationKey = `data-${lang}`;
+                const newText = element.getAttribute(translationKey);
+                
+                if (newText && element.tagName.toLowerCase() !== 'select' && 
+                    element.tagName.toLowerCase() !== 'input' && 
+                    element.tagName.toLowerCase() !== 'textarea') {
+                    
+                    if (element.children.length === 0) {
+                        element.textContent = newText;
+                    } else {
+                        const textNode = Array.from(element.childNodes).find(node => node.nodeType === 3);
+                        if (textNode) {
+                            textNode.textContent = newText;
+                        }
+                    }
+                }
             });
+            
+            document.querySelectorAll('[data-en-placeholder], [data-ar-placeholder], [data-fr-placeholder]').forEach(element => {
+                const placeholderKey = `data-${lang}-placeholder`;
+                const newPlaceholder = element.getAttribute(placeholderKey);
+                if (newPlaceholder) {
+                    element.setAttribute('placeholder', newPlaceholder);
+                }
+            });
+            
+            localStorage.setItem('selectedLanguage', lang);
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedLang = localStorage.getItem('selectedLanguage') || 'en';
+            const selector = document.getElementById('languageSelector');
+            
+            if (selector) {
+                selector.value = storedLang;
+            }
+            
+            updateLanguage(storedLang);
+            
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+                
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navMenu.classList.remove('active');
+                    });
+                });
+            }
+            
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', () => {
+                    const faqItem = question.closest('.faq-item');
+                    faqItem.classList.toggle('active');
+                });
+            });
+            
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitButton = document.querySelector('.submit-btn span');
+                    const originalText = submitButton.textContent;
+                    
+                    const currentLang = document.body.getAttribute('data-lang');
+                    const successMessage = {
+                        "en": "Message Sent! Thank you.",
+                        "ar": "تم الإرسال! شكرًا لك.",
+                        "fr": "Message Envoyé ! Merci."
+                    }[currentLang] || "Message Sent! Thank you.";
+                    
+                    submitButton.textContent = successMessage;
+                    contactForm.reset();
+                    
+                    setTimeout(() => {
+                        updateLanguage(currentLang);
+                    }, 3000);
+                });
+            }
         });
     </script>
 </body>

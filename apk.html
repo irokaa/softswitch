@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-en="SoftSwitch - Mobile App" data-ar="سوفت سويتش - التطبيق" data-fr="SoftSwitch - Application Mobile">SoftSwitch - Mobile App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --------------------------------- */
+        /* متغيرات CSS الموحدة */
+        /* --------------------------------- */
+        :root {
+            --primary-text-new: #212121;
+            --secondary-text-new: #505050; 
+            --brand-blue: #007bff; 
+            --light-bg-new: #f5f5f5; 
+            --white: #ffffff;
+            --primary-color: #0056b3; 
+            --secondary-color: #f8f8f8; 
+            --background-body: #ffffff; 
+            --text-color: #212529; 
+            --accent-color: #28a745; 
+            --shadow-light: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-medium: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* --------------------------------- */
+        /* أنماط الجسم والهيكل العامة */
+        /* --------------------------------- */
+        body { 
+            font-family: 'Almarai', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-body);
+            color: var(--text-color);
+            line-height: 1.6;
+            direction: ltr; 
+        }
+
+        /* تعديلات RTL للغة العربية */
+        body[data-lang="ar"] {
+            direction: rtl;
+        }
+        
+        body[data-lang="ar"] .new-header {
+            direction: rtl;
+        }
+        
+        body[data-lang="ar"] .main-nav a {
+            margin-left: 0;
+            margin-right: 25px;
+        }
+        
+        body[data-lang="ar"] footer {
+            direction: rtl;
+        }
+
+        /* ********** 1. شريط التنقل العلوي ********** */
+        .new-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: var(--white);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            direction: ltr;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-text-new);
+            display: flex; 
+            align-items: center;
+        }
+        .company-logo {
+            height: 30px; 
+            width: auto;
+            margin-right: 10px; 
+        }
+        
+        body[data-lang="ar"] .company-logo {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+        
+        .lang-switcher {
+            margin-right: 25px;
+        }
+        
+        body[data-lang="ar"] .lang-switcher {
+            margin-right: 0;
+            margin-left: 25px;
+        }
+
+        .lang-switcher select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            background-color: #f9fafb;
+            color: #374151;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .main-nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .main-nav a {
+            text-decoration: none;
+            color: var(--secondary-text-new);
+            margin-left: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .main-nav a:hover {
+            color: var(--brand-blue);
+        }
+        .menu-toggle {
+            display: none; 
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--primary-text-new);
+        }
+        
+        /* ********** 2. قسم البطل (Hero Section) ********** */
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+            direction: ltr;
+            background: linear-gradient(135deg, var(--primary-color), var(--brand-blue));
+            color: white;
+            padding: 80px 0;
+        }
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+        }
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            padding: 20px;
+        }
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+        }
+        .hero-content h1 {
+            font-size: 48px; 
+            font-weight: 900;
+            margin-bottom: 20px; 
+            color: white;
+            cursor: default; 
+        }
+        .hero-content p {
+            font-size: 18px; 
+            margin-bottom: 30px;
+            max-width: 500px;
+            color: rgba(255, 255, 255, 0.9);
+            cursor: default; 
+        }
+        
+        /* أزرار تحميل التطبيق */
+        .app-download-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .app-btn:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        .app-btn i {
+            font-size: 24px;
+        }
+        .app-btn-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .app-btn-text span {
+            font-size: 12px;
+        }
+        .app-btn-text strong {
+            font-size: 16px;
+        }
+
+        /* ********** 3. قسم الميزات ********** */
+        .features-section {
+            padding: 80px 20px;
+            background-color: var(--white);
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--primary-text-new);
+            margin-bottom: 15px;
+        }
+        .section-title p {
+            color: var(--secondary-text-new);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 18px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: var(--light-bg-new);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        .feature-icon {
+            background: var(--primary-color);
+            color: white;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+        }
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary-text-new);
+        }
+        .feature-card p {
+            color: var(--secondary-text-new);
+        }
+
+        /* ********** 4. قسم لقطات التطبيق ********** */
+        .screenshots-section {
+            padding: 80px 20px;
+            background: var(--light-bg-new);
+        }
+        .screenshots-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--light-bg-new);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .screenshots-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+        .screenshots-slider::-webkit-scrollbar-track {
+            background: var(--light-bg-new);
+            border-radius: 10px;
+        }
+        .screenshots-slider::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        .screenshot {
+            flex: 0 0 auto;
+            width: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+        }
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ********** 5. قسم التحميل ********** */
+        .download-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--brand-blue));
+            color: white;
+            text-align: center;
+        }
+        .download-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .download-section p {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* ********** 6. زر الاستفسار العائم ********** */
+        .floating-inquiry-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--brand-blue);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        
+        /* --------------------------------- */
+        /* أنماط تذييل الصفحة */
+        /* --------------------------------- */
+        footer {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            font-size: 14px;
+            color: var(--primary-color);
+            margin-top: 50px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+            text-align: center;
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            direction: rtl; 
+        }
+        .footer-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 400;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        .copyright {
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        /* --------------------------------- */
+        /* استجابة العرض (Responsive) */
+        /* --------------------------------- */
+        @media (max-width: 900px) {
+            .main-nav { display: none; }
+            .menu-toggle { display: block; }
+            .new-header { padding: 15px 20px; }
+            .hero-content h1 { font-size: 36px; }
+            .hero-content p { font-size: 16px; }
+            .section-title h2 { font-size: 30px; }
+            .section-title p { font-size: 16px; }
+        }
+        @media (max-width: 600px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-text, .hero-image {
+                min-width: 100%;
+            }
+            .hero-content h1 { font-size: 28px; }
+            .app-download-buttons {
+                justify-content: center;
+            }
+            .section-title h2 { font-size: 26px; }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body data-lang="en">
+    
+    <header class="new-header">
+        <div class="logo">
+            <img src="WhatsApp Image 2025-10-20 à 16.56.42_e187fcc5.jpg" alt="Softswitch Logo" class="company-logo">
+            SOFTSWITCH
+        </div>
+        <nav class="main-nav">
+            <div class="lang-switcher">
+                <select id="languageSelector" onchange="updateLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
+            <a href="test.html" data-en="HOME" data-ar="الرئيسية" data-fr="ACCUEIL">HOME</a> 
+            <a href="products.html" data-en="PRODUCTS" data-ar="المنتجات" data-fr="PRODUITS">PRODUCTS</a> 
+            <a href="app.html" class="nav-link active" data-en="APP" data-ar="التطبيق" data-fr="APPLICATION">APP</a>
+            <a href="contact.html" data-en="CONTACT" data-ar="اتصل بنا" data-fr="CONTACT">CONTACT</a>
+            <a href="about us.html" data-en="ABOUT US" data-ar="من نحن" data-fr="À PROPOS">ABOUT US</a>
+        </nav>
+    </header>
+
+    <!-- قسم البطل -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 data-en="SoftSwitch Smart Control App" data-ar="تطبيق سوفت سويتش للتحكم الذكي" data-fr="Application de Contrôle Intelligent SoftSwitch">SoftSwitch Smart Control App</h1>
+                <p data-en="Control your entire smart home and security systems from anywhere with our intuitive mobile application. Manage energy, security, automation, and more with just a few taps." data-ar="تحكم في منزلك الذكي وأنظمة الأمان بالكامل من أي مكان باستخدام تطبيقنا الجوال البديهي. إدارة الطاقة، الأمان، الأتمتة، والمزيد ببضع نقرات فقط." data-fr="Contrôlez toute votre maison intelligente et vos systèmes de sécurité de n'importe où avec notre application mobile intuitive. Gérez l'énergie, la sécurité, l'automatisation et plus encore en quelques tapotements.">Control your entire smart home and security systems from anywhere with our intuitive mobile application. Manage energy, security, automation, and more with just a few taps.</p>
+                <div class="app-download-buttons">
+                    <a href="#" class="app-btn">
+                        <i class="fab fa-apple"></i>
+                        <div class="app-btn-text">
+                            <span data-en="Download on the" data-ar="حمله من" data-fr="Télécharger sur">Download on the</span>
+                            <strong>App Store</strong>
+                        </div>
+                    </a>
+                    <a href="#" class="app-btn">
+                        <i class="fab fa-google-play"></i>
+                        <div class="app-btn-text">
+                            <span data-en="Get it on" data-ar="حمله من" data-fr="Disponible sur">Get it on</span>
+                            <strong>Google Play</strong>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="SoftSwitch App Interface" data-en="SoftSwitch App Interface" data-ar="واجهة تطبيق سوفت سويتش" data-fr="Interface de l'application SoftSwitch">
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الميزات -->
+    <section class="features-section">
+        <div class="section-title">
+            <h2 data-en="App Features" data-ar="ميزات التطبيق" data-fr="Fonctions de l'application">App Features</h2>
+            <p data-en="Discover the powerful features that make SoftSwitch the best choice for smart home control" data-ar="اكتشف الميزات القوية التي تجعل سوفت سويتش الخيار الأفضل للتحكم في المنزل الذكي" data-fr="Découvrez les fonctionnalités puissantes qui font de SoftSwitch le meilleur choix pour le contrôle de la maison intelligente">Discover the powerful features that make SoftSwitch the best choice for smart home control</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 data-en="Security Control" data-ar="التحكم في الأمان" data-fr="Contrôle de sécurité">Security Control</h3>
+                <p data-en="Manage alarm systems, surveillance cameras, and access control from your phone" data-ar="إدارة أنظمة الإنذار، كاميرات المراقبة، والتحكم في الوصول من هاتفك" data-fr="Gérez les systèmes d'alarme, les caméras de surveillance et le contrôle d'accès depuis votre téléphone">Manage alarm systems, surveillance cameras, and access control from your phone</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 data-en="Energy Management" data-ar="إدارة الطاقة" data-fr="Gestion de l'énergie">Energy Management</h3>
+                <p data-en="Monitor and control energy consumption, smart plugs, and lighting systems" data-ar="مراقبة والتحكم في استهلاك الطاقة، المقابس الذكية، وأنظمة الإضاءة" data-fr="Surveillez et contrôlez la consommation d'énergie, les prises intelligentes et les systèmes d'éclairage">Monitor and control energy consumption, smart plugs, and lighting systems</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <h3 data-en="Network Control" data-ar="التحكم في الشبكة" data-fr="Contrôle du réseau">Network Control</h3>
+                <p data-en="Manage low-voltage and low-current networks including IT and telephone systems" data-ar="إدارة شبكات الجهد المنخفض والتيار المنخفض بما في ذلك أنظمة تكنولوجيا المعلومات والهاتف" data-fr="Gérez les réseaux basse tension et bas courant, y compris les systèmes informatiques et téléphoniques">Manage low-voltage and low-current networks including IT and telephone systems</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-fire-extinguisher"></i>
+                </div>
+                <h3 data-en="Fire Safety" data-ar="السلامة من الحرائق" data-fr="Sécurité incendie">Fire Safety</h3>
+                <p data-en="Monitor fire protection systems and receive instant alerts in case of emergencies" data-ar="مراقبة أنظمة الحماية من الحرائق وتلقي تنبيهات فورية في حالات الطوارئ" data-fr="Surveillez les systèmes de protection contre l'incendie et recevez des alertes instantanées en cas d'urgence">Monitor fire protection systems and receive instant alerts in case of emergencies</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 data-en="Smart Analytics" data-ar="التحليلات الذكية" data-fr="Analyses intelligentes">Smart Analytics</h3>
+                <p data-en="Get detailed reports and insights about your system performance and usage patterns" data-ar="احصل على تقارير مفصلة ورؤى حول أداء النظام وأنماط الاستخدام" data-fr="Obtenez des rapports détaillés et des informations sur les performances de votre système et les modèles d'utilisation">Get detailed reports and insights about your system performance and usage patterns</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 data-en="Automation" data-ar="الأتمتة" data-fr="Automatisation">Automation</h3>
+                <p data-en="Create custom automation scenarios for different situations and schedules" data-ar="إنشاء سيناريوهات أتمتة مخصصة لحالات وجداول زمنية مختلفة" data-fr="Créez des scénarios d'automatisation personnalisés pour différentes situations et horaires">Create custom automation scenarios for different situations and schedules</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم لقطات التطبيق -->
+    <section class="screenshots-section">
+        <div class="section-title">
+            <h2 data-en="App Screenshots" data-ar="لقطات التطبيق" data-fr="Captures d'écran de l'application">App Screenshots</h2>
+            <p data-en="Explore the intuitive and user-friendly interface of SoftSwitch app" data-ar="استكشف واجهة تطبيق سوفت سويتش البديهية وسهلة الاستخدام" data-fr="Explorez l'interface intuitive et conviviale de l'application SoftSwitch">Explore the intuitive and user-friendly interface of SoftSwitch app</p>
+        </div>
+        <div class="screenshots-slider">
+            <div class="screenshot">
+                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Dashboard View" data-en="Dashboard View" data-ar="عرض لوحة التحكم" data-fr="Vue du tableau de bord">
+            </div>
+            <div class="screenshot">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Security Controls" data-en="Security Controls" data-ar="ضوابط الأمان" data-fr="Contrôles de sécurité">
+            </div>
+            <div class="screenshot">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25856cd63?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Energy Monitoring" data-en="Energy Monitoring" data-ar="مراقبة الطاقة" data-fr="Surveillance de l'énergie">
+            </div>
+            <div class="screenshot">
+                <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Automation Settings" data-en="Automation Settings" data-ar="إعدادات الأتمتة" data-fr="Paramètres d'automatisation">
+            </div>
+            <div class="screenshot">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Reports & Analytics" data-en="Reports & Analytics" data-ar="التقارير والتحليلات" data-fr="Rapports et analyses">
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم التحميل -->
+    <section class="download-section">
+        <h2 data-en="Download SoftSwitch App Today" data-ar="حمّل تطبيق سوفت سويتش اليوم" data-fr="Téléchargez l'application SoftSwitch aujourd'hui">Download SoftSwitch App Today</h2>
+        <p data-en="Join thousands of satisfied users who control their smart homes with SoftSwitch" data-ar="انضم إلى آلاف المستخدمين الراضين الذين يتحكمون في منازلهم الذكية باستخدام سوفت سويتش" data-fr="Rejoignez des milliers d'utilisateurs satisfaits qui contrôlent leur maison intelligente avec SoftSwitch">Join thousands of satisfied users who control their smart homes with SoftSwitch</p>
+        <div class="app-download-buttons">
+            <a href="#" class="app-btn">
+                <i class="fab fa-apple"></i>
+                <div class="app-btn-text">
+                    <span data-en="Download on the" data-ar="حمله من" data-fr="Télécharger sur">Download on the</span>
+                    <strong>App Store</strong>
+                </div>
+            </a>
+            <a href="#" class="app-btn">
+                <i class="fab fa-google-play"></i>
+                <div class="app-btn-text">
+                    <span data-en="Get it on" data-ar="حمله من" data-fr="Disponible sur">Get it on</span>
+                    <strong>Google Play</strong>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <a href="contact.html" class="floating-inquiry-btn" data-en="INQUIRY" data-ar="استفسار" data-fr="DEMANDE">
+        INQUIRY
+    </a>
+
+    <footer>
+        <p class="copyright" data-en="Copyright © 2025 softwsitch. All rights reserved." data-ar="حقوق النشر © 2025 سوفت سويتش. جميع الحقوق محفوظة." data-fr="Droits d'auteur © 2025 softwsitch. Tous droits réservés.">Copyright © 2025 softwsitch. All rights reserved.</p> 
+        <div class="footer-links">
+            <a href="#" data-en="Privacy Policy" data-ar="سياسة الخصوصية" data-fr="Politique de confidentialité">Privacy Policy</a>
+            <span>|</span>
+            <a href="#" data-en="Terms of Use" data-ar="شروط الاستخدام" data-fr="Conditions d'utilisation">Terms of Use</a>
+        </div> 
+    </footer>
+
+    <script>
+        // وظيفة تحديث اللغة
+        function updateLanguage(lang) {
+            // تحديث سمة اللغة لـ body لتطبيق CSS RTL
+            document.body.setAttribute('data-lang', lang);
+
+            // تحديث جميع النصوص القائمة على سمات البيانات
+            document.querySelectorAll('[data-en], [data-ar], [data-fr]').forEach(element => {
+                const translationKey = `data-${lang}`;
+                const newText = element.getAttribute(translationKey);
+                
+                // تحديث نص العنصر إذا وجدت الترجمة
+                if (newText) {
+                    // إذا كان العنصر هو <select>، لا تقم بتغيير محتواه النصي، فالمحتوى في <option>
+                    if (element.tagName.toLowerCase() !== 'select' && element.tagName.toLowerCase() !== 'input' && element.tagName.toLowerCase() !== 'textarea') {
+                        // تحديث محتوى النص، مع الحفاظ على الأيقونات أو العناصر الداخلية الأخرى
+                        element.childNodes.forEach(node => {
+                            if (node.nodeType === 3) { // Node.TEXT_NODE
+                                node.textContent = newText;
+                                return;
+                            }
+                        });
+
+                        // إذا لم يكن هناك نص مباشر، قم بتحديث innerHTML للعناصر البسيطة
+                        if (element.children.length === 0) {
+                            element.textContent = newText;
+                        }
+                    } else if (element.tagName.toLowerCase() === 'span') {
+                        // تحديث نص span المستخدم داخل الأزرار
+                         element.textContent = newText;
+                    }
+                }
+            });
+
+            // تحديث اتجاه النص (مهم لحقول الإدخال والنماذج التي لا يغطيها CSS body[data-lang="ar"])
+            const direction = lang === 'ar' ? 'rtl' : 'ltr';
+            document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea').forEach(input => {
+                input.style.direction = direction;
+                input.style.textAlign = direction === 'rtl' ? 'right' : 'left';
+            });
+            
+            // حفظ تفضيل اللغة في التخزين المحلي (Local Storage)
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        // تهيئة التطبيق: تحميل اللغة المفضلة وتطبيقها
+        document.addEventListener('DOMContentLoaded', function() {
+            const storedLang = localStorage.getItem('selectedLanguage') || 'en';
+            const selector = document.getElementById('languageSelector');
+
+            // تعيين القيمة المحددة في القائمة المنسدلة
+            if (selector) {
+                selector.value = storedLang;
+            }
+
+            // تطبيق اللغة المحفوظة أو الافتراضية
+            updateLanguage(storedLang);
+        });
+    </script>
+</body>
+</html>

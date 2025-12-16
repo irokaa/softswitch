@@ -38,6 +38,12 @@
             line-height: 1.6;
             color: var(--gray-700);
             background-color: var(--gray-50);
+            direction: ltr;
+        }
+
+        body[dir="rtl"] {
+            direction: rtl;
+            text-align: right;
         }
 
         a {
@@ -57,7 +63,6 @@
         }
 
         /* Header Styles */
-        /* ********** 1. شريط التنقل العلوي ********** */
         .new-header {
             display: flex;
             justify-content: space-between;
@@ -67,22 +72,35 @@
             box-shadow: 0 1px 4px rgba(0,0,0,0.05);
             direction: ltr;
         }
+
+        body[dir="rtl"] .new-header {
+            direction: rtl;
+        }
+
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: var(--primary-text-new);
+            color: var(--gray-900);
             display: flex; 
             align-items: center;
         }
+
         .company-logo {
             height: 30px; 
             width: auto;
             margin-right: 10px; 
         }
+
+        body[dir="rtl"] .company-logo {
+            margin-right: 0;
+            margin-left: 10px; 
+        }
+
         .nav-menu {
             display: flex;
             align-items: center;
         }
+
         .nav-link {
             font-weight: 500;
             color: var(--gray-700);
@@ -93,9 +111,16 @@
             text-transform: uppercase;
             font-size: 14px;
         }
+
+        body[dir="rtl"] .nav-link {
+            margin-left: 0;
+            margin-right: 25px;
+        }
+
         .nav-link:hover {
             color: var(--primary-blue);
         }
+
         .nav-link::after {
             content: '';
             position: absolute;
@@ -106,15 +131,45 @@
             background-color: var(--primary-blue);
             transition: var(--transition);
         }
+
+        body[dir="rtl"] .nav-link::after {
+            left: auto;
+            right: 0;
+        }
+
         .nav-link:hover::after {
             width: 100%;
         }
+
         .nav-link.active {
             color: var(--primary-blue);
         }
+
         .nav-link.active::after {
             width: 100%;
         }
+
+        /* Language Switcher */
+        .lang-switcher {
+            margin-left: 20px;
+        }
+
+        body[dir="rtl"] .lang-switcher {
+            margin-left: 0;
+            margin-right: 20px;
+        }
+
+        .lang-switcher select {
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-200);
+            background-color: var(--gray-50);
+            color: var(--gray-700);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -219,6 +274,11 @@
             box-shadow: var(--shadow);
             transition: var(--transition);
             border-left: 4px solid var(--primary-blue);
+        }
+
+        body[dir="rtl"] .service-card {
+            border-left: none;
+            border-right: 4px solid var(--primary-blue);
         }
 
         .service-card:hover {
@@ -485,6 +545,11 @@
             background-color: var(--primary-blue);
         }
 
+        body[dir="rtl"] .footer-heading::after {
+            left: auto;
+            right: 0;
+        }
+
         .footer-links li {
             margin-bottom: 12px;
         }
@@ -496,6 +561,11 @@
         .footer-links a:hover {
             color: var(--primary-blue);
             padding-left: 5px;
+        }
+
+        body[dir="rtl"] .footer-links a:hover {
+            padding-left: 0;
+            padding-right: 5px;
         }
 
         .footer-contact li {
@@ -562,6 +632,11 @@
                 z-index: 1000;
                 padding: 20px;
             }
+
+            body[dir="rtl"] .nav-menu {
+                left: auto;
+                right: 0;
+            }
             
             .nav-menu.active {
                 display: flex;
@@ -597,6 +672,12 @@
                 gap: 20px;
                 text-align: center;
             }
+
+            .lang-switcher {
+                margin: 10px 0;
+                width: 100%;
+                text-align: center;
+            }
         }
 
         @media (max-width: 576px) {
@@ -625,11 +706,19 @@
         </div>
                 
         <nav class="nav-menu">
-            <a href="test.html" class="nav-link">HOME</a>
-            <a href="products.html" class="nav-link">PRODUCTS</a>
-            <a href="cart.html" class="nav-link">SHOPPING CART</a>
-            <a href="about us.html" class="nav-link active">ABOUT US</a>
-            <a href="contact.html" class="nav-link">CONTACT</a>
+            <a href="test.html" class="nav-link translatable" data-en="HOME" data-ar="الرئيسية" data-fr="ACCUEIL">HOME</a>
+            <a href="products.html" class="nav-link translatable" data-en="PRODUCTS" data-ar="المنتجات" data-fr="PRODUITS">PRODUCTS</a>
+            <a href="about us.html" class="nav-link active translatable" data-en="ABOUT US" data-ar="من نحن" data-fr="À PROPOS">ABOUT US</a>
+            <a href="contact.html" class="nav-link translatable" data-en="CONTACT" data-ar="اتصل بنا" data-fr="CONTACT">CONTACT</a>
+            
+            <!-- Language Switcher -->
+            <div class="lang-switcher">
+                <select id="languageSelector" onchange="updateLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
         </nav>
         
         <button class="mobile-menu-btn">
@@ -640,8 +729,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>About Softswitch</h1>
-            <p>Leading the way in innovative low-voltage and automation solutions for modern living and business.</p>
+            <h1 class="translatable" data-en="About Softswitch" data-ar="حول سوفت سويتش" data-fr="À propos de Softswitch">About Softswitch</h1>
+            <p class="translatable" data-en="Leading the way in innovative low-voltage and automation solutions for modern living and business." data-ar="الريادة في تقديم حلول مبتكرة للجهد المنخفض والأتمتة للحياة الحديثة والأعمال." data-fr="Leader dans les solutions innovantes de basse tension et d'automatisation pour la vie moderne et les entreprises.">Leading the way in innovative low-voltage and automation solutions for modern living and business.</p>
         </div>
     </section>
 
@@ -650,14 +739,15 @@
         <div class="container">
             <div class="about-container">
                 <div class="about-content">
-                    <h2>About Softswitch</h2>
-                    <p>Softswitch is a company specialized in the study and implementation of low-voltage and low-current networks: electrical, IT, telephone networks, surveillance, access control, alarm, and fire protection systems.</p>
-                    <p>We also offer remote control solutions for electrical and electronic installations, as well as commissioning and maintenance of automation systems.</p>
-                    <p>Founded with a vision to transform how people interact with technology in their environments, Softswitch has been at the forefront of low-voltage and automation solutions for over a decade. Our journey began with a simple idea: to make advanced technology accessible and user-friendly for both residential and commercial applications.</p>
-                    <p>Today, we're proud to be a trusted partner for hundreds of clients across Algeria, delivering innovative solutions that enhance safety, efficiency, and comfort.</p>
-                </div>
+                    <h2 class="translatable" data-en="About Softswitch" data-ar="حول سوفت سويتش" data-fr="À propos de Softswitch">About Softswitch</h2>
+                   <p class="translatable" 
+   data-en="Softswitch is a company specialized in the study and implementation of low-voltage and low-current networks: electrical, IT, telephone networks, surveillance, access control, alarm, and fire protection systems. It also offers remote control solutions for electrical and electronic installations, as well as commissioning and maintenance of automation systems." 
+   data-ar="سوفت سويتش هي شركة متخصصة في دراسة وتنفيذ شبكات الجهد المنخفض والتيار المنخفض: الشبكات الكهربائية، وتكنولوجيا المعلومات، وشبكات الهاتف، والمراقبة، والتحكم في الوصول، والإنذار، وأنظمة الحماية من الحرائق. كما تقدم حلول التحكم عن بعد للتركيبات الكهربائية والإلكترونية، بالإضافة إلى التشغيل والصيانة للأتمتة." 
+   data-fr="Softswitch est une entreprise spécialisée dans l'étude et la réalisation de réseaux basse tension et courant faible : réseaux électriques, informatiques, téléphoniques, télésurveillance, contrôle d'accès, systèmes d'alarme et anti-incendie. Elle propose aussi des solutions de contrôle à distance pour les installations électriques et électroniques, ainsi que la mise en service et la maintenance des automates.">
+   Softswitch est une entreprise spécialisée dans l'étude et la réalisation de réseaux basse tension et courant faible : réseaux électriques, informatiques, téléphoniques, télésurveillance, contrôle d'accès, systèmes d'alarme et anti-incendie. Elle propose aussi des solutions de contrôle à distance pour les installations électriques et électroniques, ainsi que la mise en service et la maintenance des automates.</p>
+               </div>
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Softswitch Team">
+                    <img src="WhatsApp Image 2025-12-15 at 14.24.43.jpeg" alt="Softswitch Team">
                 </div>
             </div>
         </div>
@@ -667,51 +757,51 @@
     <section class="services-section">
         <div class="container">
             <div class="section-header">
-                <h2>Our Services</h2>
-                <p>Comprehensive solutions for all your low-voltage and automation needs</p>
+                <h2 class="translatable" data-en="Our Services" data-ar="خدماتنا" data-fr="Nos Services">Our Services</h2>
+                <p class="translatable" data-en="Comprehensive solutions for all your low-voltage and automation needs" data-ar="حلول شاملة لجميع احتياجاتك في مجال الجهد المنخفض والأتمتة" data-fr="Solutions complètes pour tous vos besoins en basse tension et automatisation">Comprehensive solutions for all your low-voltage and automation needs</p>
             </div>
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h3>Low-Voltage Systems</h3>
-                    <p>Design and implementation of comprehensive low-voltage electrical systems for residential and commercial applications, ensuring safety and efficiency.</p>
+                    <h3 class="translatable" data-en="Low-Voltage Systems" data-ar="أنظمة الجهد المنخفض" data-fr="Systèmes Basse Tension">Low-Voltage Systems</h3>
+                    <p class="translatable" data-en="Design and implementation of comprehensive low-voltage electrical systems for residential and commercial applications, ensuring safety and efficiency." data-ar="تصميم وتنفيذ أنظمة كهربائية شاملة للجهد المنخفض للتطبيقات السكنية والتجارية، مع ضمان السلامة والكفاءة." data-fr="Conception et mise en œuvre de systèmes électriques basse tension complets pour les applications résidentielles et commerciales, garantissant sécurité et efficacité.">Design and implementation of comprehensive low-voltage electrical systems for residential and commercial applications, ensuring safety and efficiency.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-network-wired"></i>
                     </div>
-                    <h3>IT & Network Infrastructure</h3>
-                    <p>Professional installation of structured cabling, network systems, and telecommunications infrastructure to support your business operations.</p>
+                    <h3 class="translatable" data-en="IT & Network Infrastructure" data-ar="البنية التحتية لتكنولوجيا المعلومات والشبكات" data-fr="Infrastructure informatique et réseau">IT & Network Infrastructure</h3>
+                    <p class="translatable" data-en="Professional installation of structured cabling, network systems, and telecommunications infrastructure to support your business operations." data-ar="تركيب احترافي للكابلات المنظمة، وأنظمة الشبكات، والبنية التحتية للاتصالات لدعم عمليات عملك." data-fr="Installation professionnelle de câblage structuré, de systèmes réseau et d'infrastructure de télécommunications pour soutenir vos opérations commerciales.">Professional installation of structured cabling, network systems, and telecommunications infrastructure to support your business operations.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Security Systems</h3>
-                    <p>Complete security solutions including surveillance cameras, access control systems, alarm systems, and fire protection systems.</p>
+                    <h3 class="translatable" data-en="Security Systems" data-ar="أنظمة الأمان" data-fr="Systèmes de Sécurité">Security Systems</h3>
+                    <p class="translatable" data-en="Complete security solutions including surveillance cameras, access control systems, alarm systems, and fire protection systems." data-ar="حلول أمنية كاملة تشمل كاميرات المراقبة، وأنظمة التحكم في الوصول، وأنظمة الإنذار، وأنظمة الحماية من الحرائق." data-fr="Solutions de sécurité complètes incluant caméras de surveillance, systèmes de contrôle d'accès, systèmes d'alarme et systèmes de protection incendie.">Complete security solutions including surveillance cameras, access control systems, alarm systems, and fire protection systems.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-robot"></i>
                     </div>
-                    <h3>Automation Solutions</h3>
-                    <p>Smart home and building automation systems that provide convenience, energy efficiency, and enhanced control over your environment.</p>
+                    <h3 class="translatable" data-en="Automation Solutions" data-ar="حلول الأتمتة" data-fr="Solutions d'Automatisation">Automation Solutions</h3>
+                    <p class="translatable" data-en="Smart home and building automation systems that provide convenience, energy efficiency, and enhanced control over your environment." data-ar="أنظمة المنزل الذكي وأتمتة المباني التي توفر الراحة، وكفاءة الطاقة، وتحسين التحكم في بيئتك." data-fr="Systèmes domotiques et d'automatisation des bâtiments qui offrent commodité, efficacité énergétique et contrôle amélioré de votre environnement.">Smart home and building automation systems that provide convenience, energy efficiency, and enhanced control over your environment.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-satellite-dish"></i>
                     </div>
-                    <h3>Remote Control Systems</h3>
-                    <p>Advanced remote monitoring and control solutions for electrical and electronic installations, accessible from anywhere.</p>
+                    <h3 class="translatable" data-en="Remote Control Systems" data-ar="أنظمة التحكم عن بعد" data-fr="Systèmes de Contrôle à Distance">Remote Control Systems</h3>
+                    <p class="translatable" data-en="Advanced remote monitoring and control solutions for electrical and electronic installations, accessible from anywhere." data-ar="حلول متقدمة للرصد والتحكم عن بعد للمنشآت الكهربائية والإلكترونية، يمكن الوصول إليها من أي مكان." data-fr="Solutions avancées de surveillance et de contrôle à distance pour les installations électriques et électroniques, accessibles de n'importe où.">Advanced remote monitoring and control solutions for electrical and electronic installations, accessible from anywhere.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-tools"></i>
                     </div>
-                    <h3>Maintenance & Support</h3>
-                    <p>Ongoing maintenance, troubleshooting, and technical support services to ensure your systems operate at peak performance.</p>
+                    <h3 class="translatable" data-en="Maintenance & Support" data-ar="الصيانة والدعم" data-fr="Maintenance & Support">Maintenance & Support</h3>
+                    <p class="translatable" data-en="Ongoing maintenance, troubleshooting, and technical support services to ensure your systems operate at peak performance." data-ar="خدمات الصيانة المستمرة، واستكشاف الأخطاء وإصلاحها، والدعم الفني لضمان تشغيل أنظمتك بأقصى أداء." data-fr="Maintenance continue, dépannage et services de support technique pour garantir que vos systèmes fonctionnent à des performances optimales.">Ongoing maintenance, troubleshooting, and technical support services to ensure your systems operate at peak performance.</p>
                 </div>
             </div>
         </div>
@@ -725,15 +815,15 @@
                     <div class="mv-icon">
                         <i class="fas fa-bullseye"></i>
                     </div>
-                    <h3>Our Mission</h3>
-                    <p>To deliver innovative, reliable, and sustainable low-voltage and automation solutions that enhance safety, efficiency, and comfort in residential and commercial spaces. We strive to make advanced technology accessible and user-friendly for all our clients.</p>
+                    <h3 class="translatable" data-en="Our Mission" data-ar="مهمتنا" data-fr="Notre Mission">Our Mission</h3>
+                    <p class="translatable" data-en="To deliver innovative, reliable, and sustainable low-voltage and automation solutions that enhance safety, efficiency, and comfort in residential and commercial spaces. We strive to make advanced technology accessible and user-friendly for all our clients." data-ar="تقديم حلول مبتكرة وموثوقة ومستدامة للجهد المنخفض والأتمتة تعزز السلامة والكفاءة والراحة في المساحات السكنية والتجارية. نحن نسعى لجعل التكنولوجيا المتقدمة في متناول جميع عملائنا وسهلة الاستخدام." data-fr="Fournir des solutions innovantes, fiables et durables en basse tension et automatisation qui améliorent la sécurité, l'efficacité et le confort dans les espaces résidentiels et commerciaux. Nous nous efforçons de rendre la technologie avancée accessible et conviviale pour tous nos clients.">To deliver innovative, reliable, and sustainable low-voltage and automation solutions that enhance safety, efficiency, and comfort in residential and commercial spaces. We strive to make advanced technology accessible and user-friendly for all our clients.</p>
                 </div>
                 <div class="mv-card">
                     <div class="mv-icon">
                         <i class="fas fa-eye"></i>
                     </div>
-                    <h3>Our Vision</h3>
-                    <p>To be the leading provider of smart automation solutions in Algeria, recognized for our technical expertise, quality service, and commitment to transforming spaces into intelligent, connected environments that improve quality of life and business operations.</p>
+                    <h3 class="translatable" data-en="Our Vision" data-ar="رؤيتنا" data-fr="Notre Vision">Our Vision</h3>
+                    <p class="translatable" data-en="To be the leading provider of smart automation solutions in Algeria, recognized for our technical expertise, quality service, and commitment to transforming spaces into intelligent, connected environments that improve quality of life and business operations." data-ar="أن نكون المزود الرائد لحلول الأتمتة الذكية في الجزائر، معترف بنا لخبرتنا التقنية، وخدماتنا عالية الجودة، والتزامنا بتحويل المساحات إلى بيئات ذكية ومتصلة تعزز جودة الحياة وعمليات الأعمال." data-fr="Être le principal fournisseur de solutions d'automatisation intelligente en Algérie, reconnu pour notre expertise technique, notre service de qualité et notre engagement à transformer les espaces en environnements intelligents et connectés qui améliorent la qualité de vie et les opérations commerciales.">To be the leading provider of smart automation solutions in Algeria, recognized for our technical expertise, quality service, and commitment to transforming spaces into intelligent, connected environments that improve quality of life and business operations.</p>
                 </div>
             </div>
         </div>
@@ -743,185 +833,168 @@
     <section class="values-section">
         <div class="container">
             <div class="section-header">
-                <h2>Our Values</h2>
-                <p>The principles that guide everything we do at Softswitch</p>
+                <h2 class="translatable" data-en="Our Values" data-ar="قيمنا" data-fr="Nos Valeurs">Our Values</h2>
+                <p class="translatable" data-en="The principles that guide everything we do at Softswitch" data-ar="المبادئ التي توجه كل ما نقوم به في سوفت سويتش" data-fr="Les principes qui guident tout ce que nous faisons chez Softswitch">The principles that guide everything we do at Softswitch</p>
             </div>
             <div class="values-grid">
                 <div class="value-card">
                     <div class="value-icon">
                         <i class="fas fa-lightbulb"></i>
                     </div>
-                    <h3>Innovation</h3>
-                    <p>We continuously explore new technologies and approaches to deliver cutting-edge solutions that meet evolving customer needs.</p>
+                    <h3 class="translatable" data-en="Innovation" data-ar="الابتكار" data-fr="Innovation">Innovation</h3>
+                    <p class="translatable" data-en="We continuously explore new technologies and approaches to deliver cutting-edge solutions that meet evolving customer needs." data-ar="نستكشف باستمرار التقنيات والنهج الجديدة لتقديم حلول متطورة تلبي احتياجات العملاء المتطورة." data-fr="Nous explorons continuellement de nouvelles technologies et approches pour fournir des solutions de pointe qui répondent aux besoins évolutifs des clients.">We continuously explore new technologies and approaches to deliver cutting-edge solutions that meet evolving customer needs.</p>
                 </div>
                 <div class="value-card">
                     <div class="value-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Reliability</h3>
-                    <p>Our systems are built to last, with rigorous testing and quality assurance processes to ensure uninterrupted performance.</p>
+                    <h3 class="translatable" data-en="Reliability" data-ar="الموثوقية" data-fr="Fiabilité">Reliability</h3>
+                    <p class="translatable" data-en="Our systems are built to last, with rigorous testing and quality assurance processes to ensure uninterrupted performance." data-ar="تم بناء أنظمتنا لتدوم، مع اختبارات صارمة وعمليات ضمان الجودة لضمان الأداء دون انقطاع." data-fr="Nos systèmes sont conçus pour durer, avec des tests rigoureux et des processus d'assurance qualité pour garantir des performances ininterrompues.">Our systems are built to last, with rigorous testing and quality assurance processes to ensure uninterrupted performance.</p>
                 </div>
                 <div class="value-card">
                     <div class="value-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3>Customer Focus</h3>
-                    <p>We listen to our clients' needs and tailor our solutions to provide maximum value and satisfaction.</p>
+                    <h3 class="translatable" data-en="Customer Focus" data-ar="التركيز على العميل" data-fr="Orientation Client">Customer Focus</h3>
+                    <p class="translatable" data-en="We listen to our clients' needs and tailor our solutions to provide maximum value and satisfaction." data-ar="نستمع إلى احتياجات عملائنا ونصمم حلولنا لتقديم أقصى قيمة ورضا." data-fr="Nous écoutons les besoins de nos clients et adaptons nos solutions pour fournir une valeur et une satisfaction maximales.">We listen to our clients' needs and tailor our solutions to provide maximum value and satisfaction.</p>
                 </div>
                 <div class="value-card">
                     <div class="value-icon">
                         <i class="fas fa-handshake"></i>
                     </div>
-                    <h3>Integrity</h3>
-                    <p>We conduct our business with honesty, transparency, and ethical practices, building trust with every client interaction.</p>
+                    <h3 class="translatable" data-en="Integrity" data-ar="النزاهة" data-fr="Intégrité">Integrity</h3>
+                    <p class="translatable" data-en="We conduct our business with honesty, transparency, and ethical practices, building trust with every client interaction." data-ar="نمارس أعمالنا بأمانة وشفافية وممارسات أخلاقية، وبناء الثقة مع كل تفاعل مع العملاء." data-fr="Nous menons nos activités avec honnêteté, transparence et pratiques éthiques, établissant la confiance à chaque interaction client.">We conduct our business with honesty, transparency, and ethical practices, building trust with every client interaction.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Team Section -->
-    <section class="team-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Our Leadership Team</h2>
-                <p>The experienced professionals driving our success</p>
-            </div>
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="CEO">
-                    </div>
-                    <h3>Mohamed Ali</h3>
-                    <p>Chief Executive Officer</p>
-                    <p>15+ years in electrical engineering and automation systems</p>
-                </div>
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="CTO">
-                    </div>
-                    <h3>Sarah Benali</h3>
-                    <p>Chief Technology Officer</p>
-                    <p>Expert in smart home technologies and IoT systems</p>
-                </div>
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Operations Manager">
-                    </div>
-                    <h3>Karim Boudiaf</h3>
-                    <p>Operations Manager</p>
-                    <p>Specialized in project management and client relations</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>10+</h3>
-                    <p>Years of Experience</p>
-                </div>
-                <div class="stat-item">
-                    <h3>500+</h3>
-                    <p>Projects Completed</p>
-                </div>
-                <div class="stat-item">
-                    <h3>95%</h3>
-                    <p>Client Satisfaction</p>
-                </div>
-                <div class="stat-item">
-                    <h3>24/7</h3>
-                    <p>Support Available</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
-    <footer>
+   <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <i class="fas fa-bolt"></i>
                         SOFTSWITCH
                     </div>
-                    <p>Specialists in low-voltage systems, automation, and smart solutions for residential and commercial applications.</p>
+                    <p data-en="Specialists in low-voltage systems and industrial automation, providing smart and reliable solutions for complex projects." data-ar="متخصصون في أنظمة الجهد المنخفض والأتمتة الصناعية، نقدم حلولًا ذكية وموثوقة للمشاريع المعقدة." data-fr="Spécialistes des systèmes basse tension et de l'automatisation industrielle, nous fournissons des solutions intelligentes et fiables pour des projets complexes.">Specialists in low-voltage systems and industrial automation, providing smart and reliable solutions for complex projects.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.facebook.com/share/1C4ucDjWD8/" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/213656415281" target="_blank" class="social-link">
+                            <i class="fab fa-whatsapp"></i>
                         </a>
                     </div>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-heading">Quick Links</h3>
+
+                <div class="footer-links-col">
+                    <h3 class="footer-heading" data-en="Quick Links" data-ar="روابط سريعة" data-fr="Liens rapides">Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="solutions.html">Solutions</a></li>
-                        <li><a href="projects.html">Projects</a></li>
-                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="test.html" data-en="Home" data-ar="الرئيسية" data-fr="Accueil">Home</a></li>
+                        <li><a href="products.html" data-en="Products" data-ar="المنتجات" data-fr="Produits">Products</a></li>
+                        <li><a href="about us.html" data-en="About Us" data-ar="من نحن" data-fr="À Propos">About Us</a></li>
+                        <li><a href="contact.html" data-en="Contact" data-ar="اتصل بنا" data-fr="Contact">Contact</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-heading">Our Services</h3>
+
+                <div class="footer-links-col">
+                    <h3 class="footer-heading" data-en="Our Services" data-ar="خدماتنا" data-fr="Nos services">Our Services</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Low-Voltage Systems</a></li>
-                        <li><a href="#">Automation Solutions</a></li>
-                        <li><a href="#">Security Systems</a></li>
-                        <li><a href="#">Network Infrastructure</a></li>
-                        <li><a href="#">Maintenance & Support</a></li>
+                        <li><a href="#" data-en="Low-Voltage Systems" data-ar="أنظمة الجهد المنخفض" data-fr="Systèmes Basse Tension">Low-Voltage Systems</a></li>
+                        <li><a href="#" data-en="Industrial Automation" data-ar="الأتمتة الصناعية" data-fr="Automatisation Industrielle">Industrial Automation</a></li>
+                        <li><a href="#" data-en="Networking" data-ar="الشبكات" data-fr="Réseautage">Networking</a></li>
+                        <li><a href="#" data-en="Security Systems" data-ar="أنظمة الأمن" data-fr="Systèmes de sécurité">Security Systems</a></li>
+                        <li><a href="#" data-en="Electrical Installation" data-ar="التثبيتات الكهربائية" data-fr="Des Installations électriques">Electrical Installation</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-contact">
-                    <h3 class="footer-heading">Contact Info</h3>
-                    <ul>
+
+                <div class="footer-contact-col">
+                    <h3 class="footer-heading" data-en="Contact Details" data-ar="تفاصيل الاتصال" data-fr="Coordonnées">Contact Details</h3>
+                    <ul class="footer-contact">
                         <li>
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>Hassi Messaoud, Ouargla, Algeria</span>
+                            <span data-en="Address: 1850 Logts, Hassi Messaoud - Ouargla" data-ar="العنوان: 1850 سكن، حاسي مسعود - ورقلة" data-fr="Adresse : 1850 Logts, Hassi Messaoud - Ouargla">Hassi Messaoud, Ouargla, Algeria</span>
                         </li>
                         <li>
                             <i class="fas fa-phone"></i>
-                            <span>+213 656 415 281</span>
+                            <a href="tel:+213656415281" data-en="+213 656 415 281" data-ar="+213 656 415 281" data-fr="+213 656 415 281">+213 656 415 281</a>
                         </li>
                         <li>
                             <i class="fas fa-envelope"></i>
-                            <span>soft_switch@yahoo.com</span>
+                            <a href="mailto:soft_switch@yahoo.com" data-en="soft_switch@yahoo.com" data-ar="soft_switch@yahoo.com" data-fr="soft_switch@yahoo.com">soft_switch@yahoo.com</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
-                <p class="copyright">Copyright © 2025 Softswitch. All rights reserved.</p>
+                <p class="copyright" data-en="&copy; 2025 Softswitch. All rights reserved." data-ar="&copy; 2025 سوفت سويتش. جميع الحقوق محفوظة." data-fr="&copy; 2025 Softswitch. Tous droits réservés.">&copy; 2025 Softswitch. All rights reserved.</p>
                 <div class="footer-bottom-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Use</a>
-                    <a href="#">Sitemap</a>
+                    <a href="#" data-en="Privacy Policy" data-ar="سياسة الخصوصية" data-fr="Politique de confidentialité">Privacy Policy</a>
+                    <a href="#" data-en="Terms of Service" data-ar="شروط الخدمة" data-fr="Conditions d'utilisation">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
+        // Language Management
+        let currentLanguage = 'en'; // اللغة الافتراضية
+
+        // تغيير اللغة
+        function updateLanguage(lang) {
+            currentLanguage = lang;
+            translatePage();
+            saveLanguagePreference(lang);
+        }
+
+        // الترجمة
+        function translatePage() {
+            document.querySelectorAll('.translatable').forEach(element => {
+                if (element.dataset[currentLanguage]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.value = element.dataset[currentLanguage];
+                    } else {
+                        element.textContent = element.dataset[currentLanguage];
+                    }
+                }
+            });
+            
+            // تحديث اتجاه النص
+            if (currentLanguage === 'ar') {
+                document.body.setAttribute('dir', 'rtl');
+            } else {
+                document.body.setAttribute('dir', 'ltr');
+            }
+        }
+
+        // حفظ تفضيل اللغة
+        function saveLanguagePreference(lang) {
+            localStorage.setItem('selectedLanguage', lang);
+        }
+
+        // تحميل تفضيل اللغة
+        function loadLanguagePreference() {
+            const storedLang = localStorage.getItem('selectedLanguage') || 'en';
+            document.getElementById('languageSelector').value = storedLang;
+            updateLanguage(storedLang);
+        }
+
         // Mobile menu toggle
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             const navMenu = document.querySelector('.nav-menu');
             navMenu.classList.toggle('active');
+        });
+
+        // Initial load: check local storage or default to English
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLanguagePreference();
+        });
+
+        // Save language preference on change
+        document.getElementById('languageSelector').addEventListener('change', function() {
+            saveLanguagePreference(this.value);
         });
     </script>
 </body>
